@@ -6,7 +6,7 @@ interface PageProps {
 
 const Page: FC<PageProps> = ({}) => {
     return (
-        <div className="mt-[20%] text-center text-amber-500 font-bold text-9xl">Coming Soon</div>
+        <div className="mt-[20%] text-center text-amber-500 font-bold text-5xl">Welcme to Calorie Compass</div>
     );
 }
 
