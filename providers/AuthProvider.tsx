@@ -22,9 +22,9 @@ const AuthProvider: FC<AuthProviderProps> = async ({children}) => {
 
 
     return (
-        <div>
+        <>
             {children}
-        </div>
+        </>
     );
 }
 

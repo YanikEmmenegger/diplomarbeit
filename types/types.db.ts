@@ -1,0 +1,20 @@
+export interface Food{
+    id?:number
+    product_name: string,
+    brand?:string,
+    barcode?: string,
+    serving_factor: number,
+    unit: string,
+    calories: number,
+    fat: number,
+    saturated_fat: number,
+    carbohydrates: number,
+    sugar: number,
+    protein: number,
+    salt: number,
+    image?: string,
+    vegan: boolean,
+    lactose_free: boolean,
+    gluten_free: boolean,
+    source?: string,
+}

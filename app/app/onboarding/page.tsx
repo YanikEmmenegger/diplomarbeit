@@ -6,7 +6,7 @@ interface PageProps {
 
 const Page: FC<PageProps> = ({}) => {
     return (
-        <div>Onboarding Process</div>
+        <div className={"cc-page"}>Onboarding Process</div>
     );
 }
 

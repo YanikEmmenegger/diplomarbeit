@@ -1,8 +1,11 @@
-const Page = async ({}) => {
+import {FC} from "react";
 
+
+const Page = () => {
     return (
-        <div className="mt-[20%] text-center text-amber-500 font-bold text-5xl">Protected Area - Dashboard, hello</div>
+        <div className='cc-page'>
+            Dashboard - Protected
+        </div>
     );
 }
-
 export default Page;

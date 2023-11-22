@@ -7,7 +7,7 @@ interface SignOutButtonProps {
 const SignOutButton: FC<SignOutButtonProps> = ({}) => {
     return (
         <form action="/api/auth/signout" method="post">
-            <button className="button block" type="submit">
+            <button id={"cc-button-signout"} className="cc-button-normal" type="submit">
                 Sign out
             </button>
         </form>

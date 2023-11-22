@@ -17,12 +17,12 @@ export default function AuthForm() {
         url = url.charAt(url.length - 1) === '/api/auth/callback' ? url : `${url}/api/auth/callback`
         return url
     }
-
     return (
-        <div className="pt-8 mx-auto lg:w-1/2 w-[90%]">
+        <div id={"cc-auth-form"} className=" pt-12 mx-auto lg:w-1/2 w-[90%]">
+            <h1 className={"text-center text-3xl"}>Login | SignUp</h1>
             <Auth socialLayout={"vertical"} magicLink providers={["linkedin", "github", "apple", "google"]}
                   redirectTo={getURL()}
-                  onlyThirdPartyProviders={true}
+                  onlyThirdPartyProviders
                   theme="dark" supabaseClient={supabase} appearance={{
                 theme: ThemeSupa,
                 variables: {
