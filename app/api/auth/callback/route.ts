@@ -1,7 +1,6 @@
-import {createRouteHandlerClient, createServerComponentClient} from '@supabase/auth-helpers-nextjs'
+import {createRouteHandlerClient} from '@supabase/auth-helpers-nextjs'
 import { cookies } from 'next/headers'
 import { NextRequest, NextResponse } from 'next/server'
-import {Database} from "@/types/supabase";
 
 export async function GET(req: NextRequest) {
     const cookieStore = cookies()
@@ -21,9 +20,8 @@ export async function GET(req: NextRequest) {
     }else{
         console.log(data)
         if (!data.onboarding_complete) {
-            return NextResponse.redirect(new URL('/app/onboarding', req.url))
+           return NextResponse.redirect(new URL('/app/onboarding', req.url))
         }
     }
-
     return NextResponse.redirect(new URL('/app', req.url))
 }
