@@ -10,7 +10,7 @@ export default function AuthForm() {
     return (
         <div className="pt-8 mx-auto lg:w-1/2 w-[90%]">
             <Auth socialLayout={"vertical"} magicLink providers={["linkedin", "github", "apple", "google"]}
-                  redirectTo="http://localhost:3000/api/auth/callback"
+                  redirectTo="/api/auth/callback"
                   onlyThirdPartyProviders={true}
                   theme="dark" supabaseClient={supabase} appearance={{
                 theme: ThemeSupa,
