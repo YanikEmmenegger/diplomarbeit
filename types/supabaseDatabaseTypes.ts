@@ -240,6 +240,7 @@ export interface Database {
           goal_protein: number | null
           id: string
           name: string | null
+          onboarding_complete: boolean
         }
         Insert: {
           created_at?: string
@@ -252,6 +253,7 @@ export interface Database {
           goal_protein?: number | null
           id?: string
           name?: string | null
+          onboarding_complete?: boolean
         }
         Update: {
           created_at?: string
@@ -264,6 +266,7 @@ export interface Database {
           goal_protein?: number | null
           id?: string
           name?: string | null
+          onboarding_complete?: boolean
         }
         Relationships: [
           {

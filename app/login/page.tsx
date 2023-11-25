@@ -1,6 +1,6 @@
 import AuthForm from "@/components/AuthForm";
 import {createServerComponentClient} from "@supabase/auth-helpers-nextjs";
-import {Database} from "@/types/supabase";
+import {Database} from "@/types/supabaseDatabaseTypes";
 import {cookies} from "next/headers";
 import {redirect} from "next/navigation";
 const Page = async () => {

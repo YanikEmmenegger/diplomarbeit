@@ -1,13 +1,21 @@
-import {NextResponse} from 'next/server'
+import {NextRequest, NextResponse} from 'next/server'
 import {Food} from "@/types/types.db";
 import {APIResponse} from "@/types/types.api";
+import {searchFood} from "@/actions/foodTableHandler";
+import {cookies} from "next/headers";
+import {createRouteHandlerClient} from "@supabase/auth-helpers-nextjs";
 export const revalidate = 60
-export async function GET(request: Request) {
-
+export async function GET(request: NextRequest) {
     const {searchParams} = new URL(request.url)
     const product_name = searchParams.get('q')
     const barcode = searchParams.get('b')
     const limit = searchParams.get('limit')
+    const extended_search:boolean = searchParams.get('extended_search')?.toString() === '1'
+
+
+    const cookieStore = cookies()
+    const supabase = createRouteHandlerClient({ cookies: () => cookieStore })
+
 
     let foods: Food[] = [];
     //error handling provided search params
@@ -22,11 +30,11 @@ export async function GET(request: Request) {
         };
         return NextResponse.json(response, {status: 400})
     }
-    /*get Foods by provided search param
+    //get Foods by provided search param
     const foodsResults = barcode ?
-        await searchFood({productBarcode: barcode!, limit: parseInt(limit!) || 20}) :
-        await searchFood({productName: product_name!, limit: parseInt(limit!) || 20})
-    //check results on successful or error
+        await searchFood({productBarcode: barcode!, limit: parseInt(limit!) || 20, extended_search:extended_search ||false}, supabase) :
+        await searchFood({productName: product_name!, limit: parseInt(limit!) || 20, extended_search:extended_search}, supabase)
+    //check results on successful or error, extended_search:extended_search
     if (foodsResults instanceof Array) {
         //add foods to food array
         foods.push(...foodsResults)
@@ -44,7 +52,5 @@ export async function GET(request: Request) {
         results: foods
     }
     //Return positive API Response to user
-    return NextResponse.json(response, {status: 200})*/
-
-    return NextResponse.json({message: 'Work in Progress :D'})
+    return NextResponse.json(response, {status: 200})//return NextResponse.json({message: 'Work in Progress :D'})
 }

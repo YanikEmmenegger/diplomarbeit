@@ -1,7 +1,8 @@
 'use client'
 import {FC} from "react";
 import {useRouter} from "next/navigation";
-import { format } from "date-fns";
+import {format} from "date-fns";
+import {de} from "date-fns/locale";
 
 interface PageProps {
     params: {
@@ -24,7 +25,11 @@ const Page: FC<PageProps> = ({params}) => {
     }
 
     return (
-        <h1 className="">{getDisplayNameofDate(params.date, today)}</h1>
+        <>
+            <h1 className="">{getDisplayNameofDate(params.date, today)}</h1>
+            <button onClick={rightSwipe}>Zurück</button>
+            <button onClick={leftSwipe}>Nächster tag</button>
+        </>
     )
 
 }
@@ -41,7 +46,8 @@ const getDisplayNameofDate = (siteDate: string, todayDate: string): string => {
     if (siteDate === tomorrow) return "Morgen";
     //Logic to display the date if none of the above
     const date = new Date(siteDate);
-    return format(date, "EE, dd MMM");
+
+    return format(date, "EE, dd MMM", {locale: de});
 }
 
 export default Page;

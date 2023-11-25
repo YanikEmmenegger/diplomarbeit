@@ -1,6 +1,6 @@
 export interface Food{
     id?:number
-    product_name: string,
+    name: string,
     brand?:string,
     barcode?: string,
     serving_factor: number,
@@ -13,8 +13,5 @@ export interface Food{
     protein: number,
     salt: number,
     image?: string,
-    vegan: boolean,
-    lactose_free: boolean,
-    gluten_free: boolean,
     source?: string,
 }

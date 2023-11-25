@@ -1,8 +1,7 @@
 import {FC} from "react";
 import {createServerComponentClient} from "@supabase/auth-helpers-nextjs";
-import {Database} from "@/types/supabase";
+import {Database} from "@/types/supabaseDatabaseTypes";
 import {cookies} from "next/headers";
-import {NextResponse} from "next/server";
 import {redirect} from "next/navigation";
 
 interface AuthProviderProps {
