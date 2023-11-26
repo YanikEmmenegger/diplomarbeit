@@ -18,8 +18,6 @@ const AuthProvider: FC<AuthProviderProps> = async ({children}) => {
     if (!session) {
         redirect("/login")
     }
-
-
     return (
         <>
             {children}

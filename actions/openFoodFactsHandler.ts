@@ -8,7 +8,7 @@ interface offSearchOptions {
     limit?: number
 }
 
-const offSearchFood = async (searchOption: offSearchOptions): Promise<Food[] | APIError> => {
+export const offFoodSearch = async (searchOption: offSearchOptions): Promise<Food[] | APIError> => {
     //prepare url
     const url = searchOption.productName ?
         `https://world.openfoodfacts.org/cgi/search.pl?action=process&search_terms=${searchOption.productName}&sort_by=unique_scans_n&page_size=${searchOption.limit || 20 }?sort_by=product_name&json=1` :
@@ -40,7 +40,6 @@ const offSearchFood = async (searchOption: offSearchOptions): Promise<Food[] | A
     }
 }
 
-export {offSearchFood}
 // Helper function to parse the product object returned by the Open Food Facts API
 const parseFood = (product: any): Food | null => {
     // Check if the product object contains the required fields

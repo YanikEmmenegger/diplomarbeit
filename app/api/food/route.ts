@@ -1,21 +1,22 @@
 import {NextRequest, NextResponse} from 'next/server'
 import {Food} from "@/types/types.db";
 import {APIResponse} from "@/types/types.api";
-import {searchFood} from "@/actions/foodTableHandler";
+import {searchFood} from "@/actions/searchFoodHandler";
 import {cookies} from "next/headers";
 import {createRouteHandlerClient} from "@supabase/auth-helpers-nextjs";
 export const revalidate = 60
 export async function GET(request: NextRequest) {
+
+
+
     const {searchParams} = new URL(request.url)
     const product_name = searchParams.get('q')
     const barcode = searchParams.get('b')
     const limit = searchParams.get('limit')
     const extended_search:boolean = searchParams.get('extended_search')?.toString() === '1'
 
-
     const cookieStore = cookies()
     const supabase = createRouteHandlerClient({ cookies: () => cookieStore })
-
 
     let foods: Food[] = [];
     //error handling provided search params
@@ -24,8 +25,8 @@ export async function GET(request: NextRequest) {
             statusCode: {
                 code: 400,
                 message: (!barcode && !product_name) ?
-                    'Bad Request - please provide search parameters {q=name_of_food} or {b=barcode_of_food} example: /api/food?q=penne or /api/food?b=8076802085738' :
-                    'Bad Request - please provide only 1 search parameters {q=name_of_food} or {b=barcode_of_food} example: /api/food?q=penne or /api/food?b=8076802085738'
+                    'Bad Request - please provide search parameters {q=name_of_food} or {b=barcode_of_food} example: '+request.nextUrl.origin+'/api/food?q=penne or /api/food?b=8076802085738' :
+                    'Bad Request - please provide only 1 search parameters {q=name_of_food} or {b=barcode_of_food} example: '+request.nextUrl.origin+'/api/food?q=penne or '+request.nextUrl.origin+'/api/food?b=8076802085738'
             }
         };
         return NextResponse.json(response, {status: 400})

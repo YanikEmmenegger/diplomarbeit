@@ -1,7 +1,7 @@
 import {Food} from "@/types/types.db";
 import {APIError} from "@/types/types.api";
 import {SupabaseClient} from '@supabase/supabase-js';
-import {offSearchFood} from "@/actions/openFoodFactsHandler";
+import {offFoodSearch} from "@/actions/openFoodFactsHandler";
 
 //@ts-ignore
 export const revalidate = 1;
@@ -79,8 +79,8 @@ const searchFood = async (search_options: searchOptions, supabase:SupabaseClient
     if (foods.length === 0 || search_options.extended_search) {
         const offResults: Food[] | APIError =
             search_options.productName ?
-                await offSearchFood({productName: search_options.productName, limit: search_options.limit}) :
-                await offSearchFood({productBarcode: search_options.productBarcode, limit: search_options.limit})
+                await offFoodSearch({productName: search_options.productName, limit: search_options.limit}) :
+                await offFoodSearch({productBarcode: search_options.productBarcode, limit: search_options.limit})
         if (offResults instanceof Array) {
             //add foods to food array
             foods.push(...offResults)
