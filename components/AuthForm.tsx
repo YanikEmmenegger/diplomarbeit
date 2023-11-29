@@ -8,7 +8,7 @@ export default function AuthForm() {
     const supabase = createClientComponentClient<Database>()
     const getURL = () => {
         let url = process?.env?.NEXT_PUBLIC_VERCEL_ENV === 'production' ?
-            "https://caloriecompas.ch/api/auth/callback" :
+            "https://caloriecompass.ch/" :
             process?.env?.NEXT_PUBLIC_VERCEL_URL!// Automatically set by Vercel.
         // Make sure to include `https://` when not localhost.
         url = url.includes('http') ? url : `https://${url}`
