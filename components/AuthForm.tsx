@@ -14,12 +14,12 @@ export default function AuthForm() {
         // Make sure to include `https://` when not localhost.
         url = url.includes('http') ? url : `https://${url}`
         // Make sure to include a trailing `/`.
-        url = url.charAt(url.length - 1) === '/api/auth/callback' ? url : `${url}/api/auth/callback`
+        url = url.charAt(url.length - 1) === 'api/auth/callback' ? url : `${url}api/auth/callback`
         return url
     }
     return (
         <div id={"cc-auth-form"} className=" pt-12 mx-auto lg:w-1/2 w-[90%]">
-            <h1 className={"text-center text-3xl"}>Login | SignUp</h1>
+            <h1 className={"text-center text-3xl"}>Login | SignUp {getURL()}</h1>
             <Auth socialLayout={"vertical"} magicLink providers={["linkedin", "github", "apple", "google"]}
                   redirectTo={getURL()}
                   onlyThirdPartyProviders
