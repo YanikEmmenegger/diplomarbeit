@@ -18,8 +18,7 @@ export default function AuthForm() {
     }
     return (
         <div id={"cc-auth-form"} className=" pt-12 mx-auto lg:w-1/2 w-[90%]">
-            <h1 className={"text-center text-3xl"}>Login | SignUp{process?.env?.NEXT_PUBLIC_VERCEL_URL // Automatically set by Vercel.
-            }</h1>
+            <h1 className={"text-center text-3xl"}>{process?.env?.NEXT_PUBLIC_VERCEL_ENV} Login | SignUp {getURL()}</h1>
             <Auth socialLayout={"vertical"} magicLink providers={["linkedin", "github", "apple", "google"]}
                   redirectTo={getURL()}
                   onlyThirdPartyProviders
