@@ -14,7 +14,7 @@ const LinkButton: FC<LinkButtonProps> = ({onClick, className, children,id}) => {
     return (
         <button onClick={onClick}
                 id={id}
-                className={twMerge("bg-CalorieCompass-Primary hover:opacity-95 hover:transition text-white text-2xl font-light py-2 px-4 rounded-lg", className)}>
+                className={twMerge("bg-CalorieCompass-Primary hover:opacity-90 hover:scale-105 hover:transition text-white text-2xl font-light py-2 px-4 rounded-lg", className)}>
             {children}
         </button>
     );

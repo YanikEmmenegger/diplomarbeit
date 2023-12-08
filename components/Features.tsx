@@ -22,7 +22,7 @@ const features = [
         icon: MdOutlineTrackChanges,
     },
     {
-        name: 'Comming Soon',
+        name: 'Coming Soon',
         description:
             'Weitere Funktionen werden entwickelt und kontinuierlich integriert',
         icon: IoReceiptOutline,
