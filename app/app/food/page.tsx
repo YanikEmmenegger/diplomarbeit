@@ -61,7 +61,6 @@ const Page: FC<PageProps> = ({searchParams}) => {
     useEffect(() => {
         setExtended(searchParams.extended || false);
         setLimit(30)
-        //@ts-ignore
         fetchFood().finally(() => {});
     }, [fetchFood, searchParams.extended, searchParams.productName]);
 
