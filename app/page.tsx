@@ -1,11 +1,11 @@
 'use client'
 import {FC} from "react";
 import Image from "next/image";
-import Features from "@/components/Features";
+import Features from "@/components/homepage/Features";
 import LinkButton from "@/components/LinkButton";
 import Link from "next/link";
 import {FiExternalLink} from "react-icons/fi";
-import Footer from "@/components/Footer";
+import Footer from "@/components/homepage/Footer";
 
 interface PageProps {
 }

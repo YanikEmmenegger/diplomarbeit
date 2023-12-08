@@ -79,7 +79,6 @@ const Page: FC<PageProps> = ({}) => {
 
                 <h2 className="text-xl pb-2 pt-3 text-gray-400">7. Änderungen der AGB:</h2>
                 <p className="text-sm">Recht zur Änderung der AGB mit Benachrichtigung.</p>
-
             </div>
         </div>
 

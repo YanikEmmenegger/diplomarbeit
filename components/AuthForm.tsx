@@ -19,9 +19,9 @@ export default function AuthForm() {
     return (
         <div id={"cc-auth-form"} className=" pt-12 mx-auto lg:w-1/2 w-[90%]">
             <h1 className={"text-center text-3xl"}>Login | SignUp</h1>
-            <Auth socialLayout={"vertical"} magicLink providers={[ "github", "google"]}
+            <Auth socialLayout={"vertical"} magicLink providers={["github", "google"]}
                   redirectTo={getURL()}
-                  onlyThirdPartyProviders={true}
+                  onlyThirdPartyProviders
                   theme="dark" supabaseClient={supabase} appearance={{
                 theme: ThemeSupa,
                 variables: {
