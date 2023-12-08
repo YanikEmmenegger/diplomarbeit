@@ -15,6 +15,7 @@ export async function GET(req: NextRequest) {
         data: {session},
     } = await supabase.auth.getSession()
     const {error, data} =  await supabase.from('users').select('*').eq('id', session!.user?.id).single()
+    console.log(session!.user?.id )
     if (error) {
         console.log(error)
     }else{
