@@ -39,7 +39,7 @@ const FoodItem: FC<FoodItemProps> = ({food}) => {
                 </div>
             </div>
             <div className=" shrink-0 sm:flex sm:flex-col sm:items-end">
-                    <Button className={"cursor-not-allowed opacity-50 hover:text-red-900"} onClick={()=>{}}>
+                    <Button className={" opacity-50 hover:text-red-900"} onClick={()=>FoodModal.onOpen(food)}>
                         <CiCirclePlus></CiCirclePlus>
                     </Button>
             </div>

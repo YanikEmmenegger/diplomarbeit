@@ -1,68 +1,69 @@
 'use client'
-import {FC, useCallback, useEffect, useState} from "react";
-import {Food} from "@/types/types.db";
+import {FC, useEffect, useState} from "react";
 import SearchInput from "@/components/Food/SearchInput";
 import BarcodeButton from "@/components/Food/BarcodeButton";
-
 import FoodItemSkeleton from "@/components/Food/FoodItemSkeleton";
 import ErrorMessage from "@/components/ErrorMessage";
 import FoodTable from "@/components/Food/FoodTable";
+import {Food} from "@/types/types.db";
 import Button from "@/components/Button";
 import {twMerge} from "tailwind-merge";
 import axios from "axios";
 
+
 interface PageProps {
     searchParams: {
         productName: string;
-        extended?: boolean;
-        mealType?: number;
     };
 }
 
 const Page: FC<PageProps> = ({searchParams}) => {
-    const [loading, setLoading] = useState(false);
+
+    const [loading, setLoading] = useState<Boolean>(false);
+    const [loadingMore, setLoadingMore] = useState<Boolean>(false);
+
     const [foods, setFoods] = useState<Food[]>([]);
     const [error, setError] = useState<string | null>(null);
+
     const [extended, setExtended] = useState<boolean>(false);
     const [limit, setLimit] = useState<number>(30);
-    const [loadMore, setLoadMore] = useState<boolean>(false);
+
+    const [search, setSearch] = useState<string>("");
 
 
-    const loadMoreData = () => {
-        setLimit(limit + 10)
-        setExtended(true)
-    }
-    const fetchFood = useCallback(async () => {
-        extended ? setLoadMore(true) : setLoading(true);
-        setError(null);
+    useEffect(() => {
+        const fetchData = async () => {
+            extended ? setLoadingMore(true) : setLoading(true);
 
-        if (searchParams.productName !== "") {
+            setError(null);
+
             try {
                 const axiosResponse = await axios.get(
-                    `/api/food?q=${searchParams.productName}&limit=${limit}&extended_search=${extended ? 1 : 0}`
+                    `/api/food?q=${search}&limit=${limit}&extended_search=${extended ? 1 : 0}`
                 );
                 if (axiosResponse.status !== 200) {
                     setError(axiosResponse.statusText);
                 }
                 setFoods(axiosResponse.data.results);
+                setLoading(false);
+                setLoadingMore(false)
             } catch (e: any) {
                 setError(e.message);
             }
+
         }
+        if (search !== '') {
+            fetchData();
+        }
+    }, [search, extended]);
 
-        setLoading(false);
-        setLoadMore(false);
-    }, [extended, limit, searchParams.productName]);
-
-    useEffect(() => {
-        extended && fetchFood()
-    }, [extended, fetchFood, limit]);
 
     useEffect(() => {
-        setExtended(searchParams.extended || false);
-        setLimit(30)
-        fetchFood().finally(() => {});
-    }, [fetchFood, searchParams.extended, searchParams.productName]);
+        setExtended(false)
+        if (searchParams.productName !== "") {
+            setSearch(searchParams.productName);
+        }
+    }, [searchParams.productName]);
 
     return (
         <div>
@@ -70,25 +71,35 @@ const Page: FC<PageProps> = ({searchParams}) => {
                 <SearchInput/>
                 <BarcodeButton/>
             </div>
+            <div>
 
-            {loading ? (
-                <FoodItemSkeleton/>
-            ) : error ? (
-                <ErrorMessage errorCode={500} errorMessage={error}/>
-            ) : foods.length === 0 ? (
-                <h1>Keine Ergebnisse gefunden | Bitte Suchbegriff eingeben</h1>
-            ) : (
-                <>
-                    <FoodTable foods={foods}/>
-                    <Button className={twMerge("cursor-pointer text-sm mb-10", extended ? "hidden" : "block")}
-                            onClick={loadMoreData}>mehr laden...</Button>
-                    {loadMore && <FoodItemSkeleton/>}
-                    <p className={twMerge("text-sm", loadMore ? "animate-pulse" : "hidden")}>loading....</p>
-                </>
-            )}
-
+                {
+                    loading ? (<FoodItemSkeleton/>) :
+                        (error ?
+                                (<ErrorMessage errorCode={500} errorMessage={error}/>) :
+                                (<div>
+                                    <FoodTable foods={foods}/>
+                                    {foods.length !== 0 &&
+                                        (
+                                            <>
+                                                {loadingMore && <FoodItemSkeleton/>}
+                                                <Button
+                                                    className={twMerge("mb-10 text-xs md:text-base cursor-pointer", extended ? "hidden" : "block")}
+                                                    onClick={() => {
+                                                        setLimit(40)
+                                                        setExtended(true)
+                                                    }}>mehr laden...</Button>
+                                            </>
+                                        )
+                                    }
+                                </div>)
+                        )
+                }
+            </div>
         </div>
     );
 };
 
 export default Page;
+
+
