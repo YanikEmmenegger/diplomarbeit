@@ -18,7 +18,7 @@ const FoodItem: FC<FoodItemProps> = ({food}) => {
         setImageLoaded(true)
     }
     return (
-        <li className="flex justify-between gap-x-6 py-5">
+        <li className="flex justify-between gap-x-6 py-5 cursor-pointer" onClick={()=>FoodModal.onOpen(food)}>
             <div className="flex min-w-0 gap-x-4">
 
                     <Image
@@ -39,7 +39,7 @@ const FoodItem: FC<FoodItemProps> = ({food}) => {
                 </div>
             </div>
             <div className=" shrink-0 sm:flex sm:flex-col sm:items-end">
-                    <Button className={" opacity-50 hover:text-red-900"} onClick={()=>FoodModal.onOpen(food)}>
+                    <Button className={"hover:scale-110 opacity-50"} onClick={()=>FoodModal.onOpen(food)}>
                         <CiCirclePlus></CiCirclePlus>
                     </Button>
             </div>

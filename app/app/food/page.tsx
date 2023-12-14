@@ -30,11 +30,13 @@ const Page: FC<PageProps> = ({searchParams}) => {
 
     const [search, setSearch] = useState<string>("");
 
+    //const [initialEffect, setInitialEffect] = useState<boolean>(true);
+
 
     useEffect(() => {
-        const fetchData = async () => {
-            extended ? setLoadingMore(true) : setLoading(true);
 
+        const fetchData = async () => {
+                extended ? setLoadingMore(true) : setLoading(true);
             setError(null);
 
             try {
@@ -52,15 +54,16 @@ const Page: FC<PageProps> = ({searchParams}) => {
             }
 
         }
-        if (search !== '') {
+        if (search !== '' && search !== undefined) {
             fetchData();
         }
-    }, [search, extended]);
+    }, [search, extended, limit]);
 
 
     useEffect(() => {
         setExtended(false)
-        if (searchParams.productName !== "") {
+        if (searchParams.productName !== "" && searchParams.productName !== undefined) {
+            console.log("searchParams.productName", searchParams.productName)
             setSearch(searchParams.productName);
         }
     }, [searchParams.productName]);
@@ -86,8 +89,8 @@ const Page: FC<PageProps> = ({searchParams}) => {
                                                 <Button
                                                     className={twMerge("mb-10 text-xs md:text-base cursor-pointer", extended ? "hidden" : "block")}
                                                     onClick={() => {
-                                                        setLimit(40)
                                                         setExtended(true)
+                                                        setLimit(40)
                                                     }}>mehr laden...</Button>
                                             </>
                                         )
