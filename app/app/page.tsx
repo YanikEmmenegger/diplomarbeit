@@ -1,13 +1,8 @@
-import {FC} from "react";
-
-interface PageProps {
-
-}
-
-const Page: FC<PageProps> = ({}) => {
+const Page = () => {
     return (
-        <div className="mt-[20%] text-center text-amber-500 font-bold text-5xl">Protected Area - Dashboard</div>
+        <div className='cc-page'>
+            Dashboard - Protected
+        </div>
     );
 }
-
 export default Page;

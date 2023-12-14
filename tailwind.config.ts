@@ -9,9 +9,9 @@ const config: Config = {
     theme: {
         extend: {
             colors: {
-                'CalorieCompass-Neutral': "#e7e7e7",
-                'CalorieCompass-Primary': "#3ecb00",
+                'CalorieCompass-Neutral': "#1c1c1c",
                 'CalorieCompass-Secondary': "#ff9f0f",
+                'CalorieCompass-Primary': "#3ecb00",
             },
         },
     },
