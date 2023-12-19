@@ -34,10 +34,10 @@ const NavigationBar: FC<NavigationBarProps> = ({}) => {
             href: '/settings'
         }
 
-    ], [pathname])
+    ], [pathname, today])
 
     return (
-        pathname !== '/app/onboarding' ?
+        pathname !== '/app/onboard' ?
             <div className="fixed bottom-0 left-0 w-full  justify-center flex flex-col">
                 <CirclePlusButton active={pathname === '/app'}></CirclePlusButton>
                 <div

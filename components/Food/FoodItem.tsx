@@ -20,11 +20,10 @@ const FoodItem: FC<FoodItemProps> = ({food}) => {
     return (
         <li className="flex justify-between gap-x-6 py-5 cursor-pointer" onClick={()=>FoodModal.onOpen(food)}>
             <div className="flex min-w-0 gap-x-4">
-
                     <Image
                         width={100}
                         height={100}
-                        className={twMerge("h-12 w-12 transition-opacity flex-none rounded-full bg-gray-50", !imageLoaded ? "opacity-0" : 'opacity-100')}
+                        className={twMerge("h-12 w-12 p-2 transition-opacity flex-none rounded-full bg-gray-50", !imageLoaded ? "opacity-0" : 'opacity-100')}
                         src={food.image || "/images/logo.png"}
                         alt=""
                         onLoadingComplete={handleImageLoaded}

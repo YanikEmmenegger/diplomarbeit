@@ -15,7 +15,7 @@ const NavButton: FC<NavButtonProps> = ({id, link, icon: Icon, label, active}) =>
     return (
         <div id={id} className="hover:font-bold py-4 transition cursor-pointer flex flex-col items-center justify-center w-full nav-button">
             <Link className="flex flex-col items-center justify-center" href={`/app/${link}`}>
-                <Icon font-size="30px"/>
+                <Icon fontSize="30px"/>
                 <p className={twMerge(active ? "font-bold" : "font-semibold", "text-xs transition-all") }>{label}</p>
             </Link>
 

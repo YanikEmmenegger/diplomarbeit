@@ -7,6 +7,7 @@ const nextConfig = {
                 destination: '/app',
                 permanent: true,
             },
+
         ];
     },
     images:{
