@@ -1,5 +1,7 @@
 import {twMerge} from "tailwind-merge";
 import {FC, useCallback, useEffect} from "react";
+import OnboardingInput from "@/components/Onboarding/OnboardingInput";
+import {he} from "date-fns/locale";
 
 interface StepTwoProps {
     weight: number | null;
@@ -13,6 +15,8 @@ const StepTwo: FC<StepTwoProps> = ({weight, setWeight, height, setHeight, setSte
 
 
     const validateInput = useCallback((input: HTMLInputElement) => {
+        console.log(input.value)
+        console.log(input.name)
         if (input.name === "weight") {
             if (parseInt(input.value) < 31 || parseInt(input.value) > 799 || isNaN(parseInt(input.value))) {
                 input.className = twMerge(input.className, "border-red-500")
@@ -34,50 +38,27 @@ const StepTwo: FC<StepTwoProps> = ({weight, setWeight, height, setHeight, setSte
         if (weight && height) {
             if (!isNaN(weight) && !isNaN(height) && weight > 30 && weight < 800 && height > 100 && height < 250) {
                 setStepCompleted(true)
-            }else
-            {
+            } else {
                 setStepCompleted(false)
             }
-        }else {
+        } else {
             setStepCompleted(false)
         }
     }, [weight, height, setStepCompleted])
 
     return (
         <div className="">
-            <label className="block mt-40 mb-2 text-white">
-                Gewicht (kg):
-            </label>
+            <h1 className="text-xl text-white text-center mb-2">Gewicht & Grösse</h1>
 
-            <input
+            <OnboardingInput value={weight ? weight : ""} onChange={(input) => {
+                setWeight(parseInt(input.value))
+                validateInput(input)
+            }} name={"weight"} placeholder={"Gewicht"} pattern={"[0-9]{3}"} label={"Gewicht (Kg)"}/>
 
-                type="text"
-                name={"weight"}
-                placeholder="Gewicht"
-                value={weight || ""}
-                pattern={"[0-9]{3}"}
-                onChange={(e) => {
-                    setWeight(parseInt(e.target.value))
-                    validateInput(e.target)
-                }}
-                className="h-auto rounded-lg p-4 opacity-50 focus:opacity-100 transition-opacity outline-none mb-4 border-2 bg-transparent border-CalorieCompass-Primary w-full"
-            />
-            <label className="block mb-2 text-white">
-                Grösse (cm):
-            </label>
-
-            <input
-                type="text"
-                placeholder="Grösse"
-                name={"height"}
-                value={height || ""}
-                pattern={"[0-9]{3}"}
-                onChange={(e) => {
-                    setHeight(parseInt(e.target.value))
-                    validateInput(e.target)
-                }}
-                className="h-auto rounded-lg p-4 opacity-50 focus:opacity-100 transition-opacity outline-none mb-4 border-2 bg-transparent border-CalorieCompass-Primary w-full"
-            />
+            <OnboardingInput value={height ? height : ""} onChange={(input) => {
+                setHeight(parseInt(input.value))
+                validateInput(input)
+            }} name={"height"} placeholder={"Grösse"} pattern={"[0-9]{3}"} label={"Grösse (cm)"}/>
         </div>
     )
 }

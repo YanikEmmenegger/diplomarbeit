@@ -18,8 +18,8 @@ const StepThree: FC<StepThreeProps> = ({activityLevel, setActivityLevel, setStep
 
     return (
         <div className="">
-            <div className="mt-32 flex flex-col">
-                <h1 className="text-2xl text-white text-center mb-4">Wie aktiv bist du im Alltag?</h1>
+            <div className="flex flex-col">
+                <h1 className="text-xl text-white text-center mb-4">Wie aktiv bist du im Alltag?</h1>
                 <button
                     onClick={() => handleButtonClick(1)}
                     className={twMerge("flex-1 mx-1 h-auto rounded-lg p-4 opacity-75 ease-in-out duration-500  transition outline-none mb-4 border-2 bg-transparent border-CalorieCompass-Primary", activityLevel === 1 ? 'bg-CalorieCompass-Primary' : 'bg-transparent')}>

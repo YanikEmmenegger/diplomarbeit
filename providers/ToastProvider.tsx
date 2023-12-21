@@ -4,7 +4,7 @@ import {Toaster} from "react-hot-toast";
 
 const ToasterProvider = () => {
     return (
-        <Toaster position="top-center" toastOptions={
+        <Toaster position="bottom-center" toastOptions={
             {
                 style: {
                     background: "#ff9f0f",

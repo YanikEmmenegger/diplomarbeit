@@ -1,11 +1,12 @@
 import {User} from "@/types/types.db";
 import {twMerge} from "tailwind-merge";
 import {FC, useCallback, useEffect, useMemo} from "react";
+import OnboardingInput from "@/components/Onboarding/OnboardingInput";
 
 interface StepOneProps {
     user: User
     setUser: (user: User | null) => void;
-    setStepCompleted: (stepCompleted: boolean) => void;
+    setStepCompleted?: (stepCompleted: boolean) => void;
 }
 
 const StepOne: FC<StepOneProps> = ({user, setUser, setStepCompleted}) => {
@@ -52,60 +53,37 @@ const StepOne: FC<StepOneProps> = ({user, setUser, setStepCompleted}) => {
     }, [regex.date, regex.email, regex.name]);
 
     useEffect(() => {
-            if (regex.email.test(user.email!) && regex.name.test(user.name!) && regex.name.test(user.firstname!) && regex.date.test(user.birthdate!) && user.name && user.firstname && user.email && user.birthdate) {
-                setStepCompleted(true)
-            } else {
-                setStepCompleted(false)
+            if (setStepCompleted) {
+                if (regex.email.test(user.email!) && regex.name.test(user.name!) && regex.name.test(user.firstname!) && regex.date.test(user.birthdate!) && user.name && user.firstname && user.email && user.birthdate) {
+                    setStepCompleted(true)
+                } else {
+                    setStepCompleted(false)
+                }
             }
         },
         [regex.date, regex.email, regex.name, setStepCompleted, user.birthdate, user.email, user.firstname, user.name]);
     return (
         <div className="">
-            <label className="block mb-1 text-white">
-                Name:
-            </label>
-            <input
-                type="text"
-                name={"name"}
-                placeholder="Name"
-                value={user.name || ""}
-                onChange={(e) => {
-                    setUser({...user, [e.target.name]: e.target.value})
-                    validateInput(e.target)
-                }}
-                className="h-auto rounded-lg p-3 opacity-50 focus:opacity-100 transition-opacity outline-none mb-3 border-2 bg-transparent border-CalorieCompass-Primary w-full"
-            />
-            <label className="block mb-2 text-white">
-                Vorname:
-            </label>
+            <h1 className="text-xl text-white text-center mb-2">Persönliche Daten</h1>
 
-            <input
-                type="text"
-                placeholder="Name"
-                name={"firstname"}
-                value={user.firstname || ""}
-                onChange={(e) => {
-                    setUser({...user, [e.target.name]: e.target.value})
-                    validateInput(e.target)
-                }}
-                className="h-auto rounded-lg p-3 opacity-50 focus:opacity-100 transition-opacity outline-none mb-3 border-2 bg-transparent border-CalorieCompass-Primary w-full"
-            />
-            <label className="block mb-1 text-white">
-                Vorname:
-            </label>
+            <OnboardingInput value={user.name || ""} onChange={(input) => {
+                setUser({...user, [input.name]: input.value})
+                validateInput(input)
+            }} name={"name"} placeholder="Name" label={"Name:"}/>
 
-            <input
-                type="text"
-                placeholder="Email"
-                name={"email"}
-                value={user.email || ""}
-                onChange={(e) => {
-                    setUser({...user, [e.target.name]: e.target.value})
-                    validateInput(e.target)
-                }}
-                className="h-auto rounded-lg p-3 opacity-50 focus:opacity-100 transition-opacity outline-none mb-3 border-2 bg-transparent border-CalorieCompass-Primary w-full"
-            />
-            <div className="flex flex-row">
+
+            <OnboardingInput value={user.firstname || ""} onChange={(input) => {
+                setUser({...user, [input.name]: input.value})
+                validateInput(input)
+            }
+            } name={"firstname"} placeholder="Vorname" label={"Vorname:"}/>
+
+            <OnboardingInput value={user.email || ""} onChange={(input) => {
+                setUser({...user, [input.name]: input.value})
+                validateInput(input)
+            }} name={"email"} placeholder="Email" label={"Email:"}/>
+
+            <div className="flex mt-2 flex-row">
                 <button
                     onClick={() => changeGender(1)}
                     className={twMerge("flex-1 mx-1 h-auto rounded-lg p-3 opacity-75  transition outline-none mb-3 border-2 bg-transparent border-CalorieCompass-Primary", user.gender! === 1 ? 'bg-CalorieCompass-Primary' : 'bg-transparent')}>
@@ -118,21 +96,11 @@ const StepOne: FC<StepOneProps> = ({user, setUser, setStepCompleted}) => {
                     Frau
                 </button>
             </div>
-            <label className="block mb-1 text-white">
-                Vorname:
-            </label>
+            <OnboardingInput value={user.birthdate || ""} onChange={(input) => {
+                setUser({...user, [input.name]: input.value})
+                validateInput(input)
+            }} name={"birthdate"} placeholder="Geburtsdatum" label={"Geburtsdatum:"}/>
 
-            <input
-                type="text"
-                placeholder="Geburtsdatum"
-                name={"birthdate"}
-                value={user.birthdate || ""}
-                onChange={(e) => {
-                    setUser({...user, [e.target.name]: e.target.value})
-                    validateInput(e.target)
-                }}
-                className="h-auto rounded-lg p-3 opacity-50 focus:opacity-100 transition-opacity outline-none mb-3 border-2 bg-transparent border-CalorieCompass-Primary w-full"
-            />
         </div>
     );
 };

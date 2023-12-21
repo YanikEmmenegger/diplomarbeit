@@ -2,6 +2,7 @@ import {FC, useCallback, useEffect, useState} from "react";
 import {User} from "@/types/types.db";
 import {calculateCaloricNeeds} from "@/actions/calorieCalculator";
 import {twMerge} from "tailwind-merge";
+import OnboardingInput from "@/components/Onboarding/OnboardingInput";
 
 interface StepFiveProps {
     weight: number
@@ -88,55 +89,35 @@ const StepFive: FC<StepFiveProps> = ({weight, height, activityLevel, user, setUs
         <div className='ENTER_COMPONENT_CLASS'>
             {loading ? "Erstelle Plan..." : (
                 <>
-                    <h1 className="text-2xl text-white text-center mb-4">Dein Plan: </h1>
+                    <h1 className="text-xl text-white text-center mb-4">Dein Plan: </h1>
+
                     <p className="text-white text-xs text-start mb-4">Du kannst dein Plan und die Kalorien anpassen, in
                         dem du die Makrowerte änderst, der Vorgeschlagene Plan wurde durch deinen Angaben erstellt - du
                         kannst diesen Plan jederzeit ändern</p>
-                    <label className="block mb-2 text-sm text-white">
-                        Kohlenhydrate (empfohlen: {createdPlan?.macronutrients.carbohydrates}g)
-                    </label>
-                    <input
-                        type="text"
-                        name={"goal_carbs"}
-                        placeholder={createdPlan?.macronutrients.carbohydrates.toString() || ""}
-                        value={user.goal_carbs || ""}
-                        pattern={"[0-9]{3}"}
-                        onChange={(e) => {
-                            setUser({...user, [e.target.name]: parseInt(e.target.value), goal_calories: calculateCalories()})
-                            validateInput(e.target)
-                        }}
-                        className="h-auto rounded-lg p-4 opacity-50 focus:opacity-100 transition-opacity outline-none mb-4 border-2 bg-transparent border-CalorieCompass-Primary w-full"
-                    />
-                    <label className="block mb-2 text-sm text-white">
-                        Fett (empfohlen: {createdPlan?.macronutrients.fat}g)
-                    </label>
-                    <input
-                        type="text"
-                        name={"goal_fat"}
-                        placeholder={createdPlan?.macronutrients.fat.toString() || ""}
-                        value={user.goal_fat || ""}
-                        pattern={"[0-9]{3}"}
-                        onChange={(e) => {
-                            setUser({...user, [e.target.name]: parseInt(e.target.value), goal_calories: calculateCalories()})
-                            validateInput(e.target)
-                        }}
-                        className="h-auto rounded-lg p-4 opacity-50 focus:opacity-100 transition-opacity outline-none mb-4 border-2 bg-transparent border-CalorieCompass-Primary w-full"
-                    />
-                    <label className="block mb-2 text-sm text-white">
-                        Protein (empfohlen: {createdPlan?.macronutrients.protein}g)
-                    </label>
-                    <input
-                        type="text"
-                        name={"goal_protein"}
-                        placeholder={createdPlan?.macronutrients.protein.toString() || ""}
-                        value={user.goal_protein || ""}
-                        pattern={"[0-9]{3}"}
-                        onChange={(e) => {
-                            setUser({...user, [e.target.name]: parseInt(e.target.value), goal_calories: calculateCalories()})
-                            validateInput(e.target)
-                        }}
-                        className="h-auto rounded-lg p-4 opacity-50 focus:opacity-100 transition-opacity outline-none mb-4 border-2 bg-transparent border-CalorieCompass-Primary w-full"
-                    />
+
+
+                    <OnboardingInput value={user.goal_carbs || ""} onChange={(input) => {
+                        setUser({...user, [input.name]: parseInt(input.value), goal_calories: calculateCalories()})
+                        validateInput(input)
+                    }} name={'goal_carbs'} pattern={"[0-9]{3}"}
+                                     placeholder={createdPlan?.macronutrients.carbohydrates.toString() || ""}
+                                     label={'Kohlenhydrate(empfohlen: ' + createdPlan?.macronutrients.carbohydrates + 'g)'}/>
+
+                    <OnboardingInput value={user.goal_fat || ""} onChange={(input) => {
+                        setUser({...user, [input.name]: parseInt(input.value), goal_calories: calculateCalories()})
+                        validateInput(input)
+                    }} name={'goal_fat'} pattern={"[0-9]{3}"}
+                                     placeholder={createdPlan?.macronutrients.fat.toString() || ""}
+                                     label={'Fett(empfohlen: ' + createdPlan?.macronutrients.fat + 'g)'}/>
+
+                    <OnboardingInput value={user.goal_protein || ""} onChange={(input) => {
+                        setUser({...user, [input.name]: parseInt(input.value), goal_calories: calculateCalories()})
+                        validateInput(input)
+                    }
+                    } name={'goal_protein'} pattern={"[0-9]{3}"}
+                                     placeholder={createdPlan?.macronutrients.protein.toString() || ""}
+                                     label={'Protein(empfohlen: ' + createdPlan?.macronutrients.protein + 'g)'}/>
+
                     <h2 className="text-lg text-white text-start mb-4">Kalorienziel: {user.goal_calories} kcal</h2>
                 </>
             )}

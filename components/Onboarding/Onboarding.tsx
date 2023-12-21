@@ -10,6 +10,8 @@ import StepTwo from "@/components/Onboarding/StepTwo";
 import StepThree from "@/components/Onboarding/StepThree";
 import StepFour from "@/components/Onboarding/StepFour";
 import StepFive from "@/components/Onboarding/StepFive";
+import {SiProgress} from "react-icons/si";
+import Progress from "@/components/Onboarding/Progress";
 
 const Onboarding = () => {
 
@@ -101,7 +103,7 @@ const Onboarding = () => {
                         break;
                     case 5:
                         try {
-                           await toast.promise(axios.patch("/api/user", user), {
+                            await toast.promise(axios.patch("/api/user", user), {
                                 loading: 'Speichere Daten...',
                                 success: 'Onboarding abgeschlossen',
                                 error: 'Fehler beim Speichern'
@@ -126,7 +128,7 @@ const Onboarding = () => {
                                     setStepCompleted={setStepCompleted}/>
                 case 2:
                     return <StepTwo weight={weight} setWeight={setWeight} setStepCompleted={setStepCompleted}
-                                     height={height} setHeight={setHeight}/>
+                                    height={height} setHeight={setHeight}/>
                 case 3:
                     return <StepThree setStepCompleted={setStepCompleted} activityLevel={activityLevel}
                                       setActivityLevel={setActivityLevel}/>
@@ -139,14 +141,17 @@ const Onboarding = () => {
         }
 
         return (
-            <div>
-                <OnboardingNavigation
-                    currentStep={currentStep}
-                    onNext={handleNext}
-                    onBack={handleBack}
-                />
+            <div className={"onboarding"}>
                 {loadingUser ? "Loading..." : (
-                    getStep()
+                    <>
+                        <Progress step={currentStep}/>
+                        <OnboardingNavigation
+                            currentStep={currentStep}
+                            onNext={handleNext}
+                            onBack={handleBack}
+                        />
+                        {getStep()}
+                    </>
                 )}
             </div>
         );
