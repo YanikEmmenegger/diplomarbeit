@@ -1,8 +1,10 @@
 'use client'
-import {FC} from "react";
+import {FC, useEffect, useState} from "react";
 import {useRouter} from "next/navigation";
 import {format} from "date-fns";
 import {de} from "date-fns/locale";
+import axios from "axios";
+
 
 interface PageProps {
     params: {
@@ -17,6 +19,31 @@ const Page: FC<PageProps> = ({params}) => {
     const nextDay = new Date(siteDate.setDate(siteDate.getDate() + 1)).toISOString().slice(0, 10);
     const prevDay = new Date(siteDate.setDate(siteDate.getDate() - 2)).toISOString().slice(0, 10);
     const router = useRouter();
+
+    const [breakfast, setBreakfast] = useState([]);
+    const [lunch, setLunch] = useState([]);
+    const [dinner, setDinner] = useState([]);
+    const [snacks, setSnacks] = useState([]);
+
+
+    const [data, setData] = useState(null);
+    const [error, setError] = useState(null);
+
+    useEffect(() => {
+        const fetchData = async () => {
+            console.log('/api/user/diary/' + params.date);
+            try {
+                const axiosResponse = await axios.get('/api/user/diary/' + params.date);
+                setData(axiosResponse.data);
+            } catch (e: any) {
+                setError(e);
+            }
+        };
+
+        fetchData();
+    }, [params.date]);
+
+
     const rightSwipe = () => {
         router.replace(`/app/diary/${prevDay}`)
     }
@@ -29,6 +56,9 @@ const Page: FC<PageProps> = ({params}) => {
             <h1 className="">{getDisplayNameofDate(params.date, today)}</h1>
             <button onClick={rightSwipe}>Zurück</button>
             <button onClick={leftSwipe}>Nächster tag</button>
+            <div>{
+                //@ts-ignore
+            }</div>
         </>
     )
 

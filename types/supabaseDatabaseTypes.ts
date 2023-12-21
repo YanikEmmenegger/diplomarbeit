@@ -30,6 +30,7 @@ export interface Database {
       diary: {
         Row: {
           created_at: string
+          date: string
           food_id: number
           id: number
           meal_type: number
@@ -39,6 +40,7 @@ export interface Database {
         }
         Insert: {
           created_at?: string
+          date: string
           food_id: number
           id?: number
           meal_type: number
@@ -48,6 +50,7 @@ export interface Database {
         }
         Update: {
           created_at?: string
+          date?: string
           food_id?: number
           id?: number
           meal_type?: number
@@ -233,6 +236,7 @@ export interface Database {
       }
       users: {
         Row: {
+          birthdate: string | null
           created_at: string
           email: string | null
           firstname: string | null
@@ -246,6 +250,7 @@ export interface Database {
           onboarding_complete: boolean
         }
         Insert: {
+          birthdate?: string | null
           created_at?: string
           email?: string | null
           firstname?: string | null
@@ -259,6 +264,7 @@ export interface Database {
           onboarding_complete?: boolean
         }
         Update: {
+          birthdate?: string | null
           created_at?: string
           email?: string | null
           firstname?: string | null

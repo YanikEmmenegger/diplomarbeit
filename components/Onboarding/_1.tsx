@@ -23,6 +23,7 @@ const Onboarding = () => {
         const [activityLevel, setActivityLevel] = useState<number>(2)
         const [goal, setGoal] = useState<number>(2)
 
+        const [validate, setValidate] = useState<boolean>(false)
 
         const [stepCompleted, setStepCompleted] = useState<boolean>(false)
 
@@ -76,57 +77,57 @@ const Onboarding = () => {
             setCurrentStep(currentStep - 1)
         };
         const handleNext = async () => {
+            // Implement logic to handle next button click
+            setValidate(true)
             if (!stepCompleted) {
                 toast.error('Bitte fülle alle Felder aus')
-            } else {
-                switch (currentStep) {
-                    case 1:
-                        toast.promise(axios.patch("/api/user", user), {
+            }
+            switch (currentStep) {
+                case 1:
+                    await toast.promise(axios.patch("/api/user", user), {
+                        loading: 'Speichere Daten...',
+                        success: 'Daten gespeichert',
+                        error: 'Fehler beim Speichern'
+                    })
+                    break;
+                case 2:
+                    await toast.promise(axios.post("/api/user/weight", weight), {
+                        loading: 'speichere Gewicht...',
+                        success: 'Gewicht gespeichert',
+                        error: 'Fehler beim Speichern'
+                    })
+                    await toast.promise(axios.post("/api/user/height", height), {
+                        loading: 'speichere Grösse...',
+                        success: 'Grösse gespeichert',
+                        error: 'Fehler beim Speichern'
+                    })
+                    break;
+                case 5:
+                    try {
+                        await toast.promise(axios.patch("/api/user", user), {
                             loading: 'Speichere Daten...',
-                            success: 'Daten gespeichert',
+                            success: 'Onboarding abgeschlossen',
                             error: 'Fehler beim Speichern'
                         })
-                        break;
-                    case 2:
-                        await toast.promise(axios.post("/api/user/weight", weight), {
-                            loading: 'speichere Gewicht...',
-                            success: 'Gewicht gespeichert',
-                            error: 'Fehler beim Speichern'
-                        })
-                        await toast.promise(axios.post("/api/user/height", height), {
-                            loading: 'speichere Grösse...',
-                            success: 'Grösse gespeichert',
-                            error: 'Fehler beim Speichern'
-                        })
-                        break;
-                    case 5:
-                        try {
-                           await toast.promise(axios.patch("/api/user", user), {
-                                loading: 'Speichere Daten...',
-                                success: 'Onboarding abgeschlossen',
-                                error: 'Fehler beim Speichern'
-                            })
-                            router.push('/app')
-                            //toast.success('Onboarding abgeschlossen')
-                        } catch (e) {
-                            console.error(e)
-                        }
-                        break;
-                }
-                if (currentStep !== 5) {
-                    setCurrentStep(currentStep + 1)
-                }
+                        router.push('/app')
+                    } catch (e) {
+                        console.error(e)
+
+                    }
+                    break;
+            }
+            if (currentStep !== 5) {
+                setCurrentStep(currentStep + 1)
             }
         };
-
         const getStep = () => {
             switch (currentStep) {
                 case 1:
                     return <StepOne user={user!} setUser={setUser}
-                                    setStepCompleted={setStepCompleted}/>
+                                    setStepCompleted={setStepCompleted} validate={validate}/>
                 case 2:
                     return <StepTwo weight={weight} setWeight={setWeight} setStepCompleted={setStepCompleted}
-                                     height={height} setHeight={setHeight}/>
+                                    validate={validate} height={height} setHeight={setHeight}/>
                 case 3:
                     return <StepThree setStepCompleted={setStepCompleted} activityLevel={activityLevel}
                                       setActivityLevel={setActivityLevel}/>
@@ -134,7 +135,7 @@ const Onboarding = () => {
                     return <StepFour goal={goal} setGoal={setGoal} setStepCompleted={setStepCompleted}/>
                 case 5:
                     return <StepFive weight={weight!} height={height!} activityLevel={activityLevel} user={user!}
-                                     setUser={setUser} setStepCompleted={setStepCompleted} goal={goal}/>
+                                     setUser={setUser} setStepCompleted={setStepCompleted} validate={validate} goal={goal}/>
             }
         }
 
@@ -148,6 +149,8 @@ const Onboarding = () => {
                 {loadingUser ? "Loading..." : (
                     getStep()
                 )}
+                {stepCompleted ? "Step completed" : "Step not completed"}<br/>
+                {user?.onboarding_complete ? "Onboarding completed" : "Onboarding not completed"}
             </div>
         );
     }

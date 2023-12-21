@@ -4,62 +4,88 @@ import {NextRequest, NextResponse} from 'next/server'
 import axios from "axios";
 import {Food} from "@/types/types.db";
 
+//set up types for request body
 interface RequestBody {
     food: Food;
-    day: string;
     serving_size: number;
     meal_type: number;
 }
 
-export async function POST(req: NextRequest) {
+//set up types for route parameters
+interface RouteProps {
+    params: {
+        day: string;
+    }
+}
+
+export async function POST(req: NextRequest, RoutesProps: RouteProps) {
+    //create supabase client
     const cookieStore = cookies()
     const supabase = createRouteHandlerClient({cookies: () => cookieStore})
-
+    //check if user is logged in
     const {
         data: {session},
     } = await supabase.auth.getSession()
     if (!session) {
+        //if not logged in return 401
         return NextResponse.json("Unauthorized", {status: 401})//return NextResponse.json({message: 'Work in Progress :D'})
     } else {
-
-        //const userid = req.headers.get('userid')
-        const {food, day, serving_size, meal_type}: RequestBody = await req.json()
-
-        //todo error handling if not all parameters are provided
-
-        if (!food.id) {
-            try {
-                // If no ID, make a POST request to create a new food entry
-                const response = await axios.post('http://localhost:3000/api/food', food, {
-                    headers: {
-                        'Content-Type': 'application/json',
-                        'cookie': req.headers.get('cookie')
-                        // Include any other headers needed for your request
-                    },
-                });
-
-                // Use the ID of the newly created food entry
-                food.id = response.data.id;
-            } catch (error) {
-                console.error(error);
-                return NextResponse.json(error, {status: 500})
+        //if logged in insert new diary entry
+        //get day from request url /api/user/diary/[day]
+        const day = RoutesProps.params.day
+        //check if day is formatted yyyy-mm-dd
+        const dateRegex = new RegExp('^\\d{4}-\\d{2}-\\d{2}$')
+        if (!dateRegex.test(day)) {
+            //return error if not formatted correctly
+            return NextResponse.json("Bad Request - please provide parameters {day=YYYY-MM-DD}", {status: 400})
+        }
+        //get new user data from request body
+        try {
+            //get food, serving_size and meal_type from request body {food: Food, serving_size: number, meal_type: number}
+            const {food, serving_size, meal_type}: RequestBody = await req.json()
+            //check if food exists by checking if food.id is set
+            if (!food.id) {
+                try {
+                    // If no ID, make a POST request to create a new food entry
+                    const response = await axios.post('http://localhost:3000/api/food', food, {
+                        headers: {
+                            'Content-Type': 'application/json',
+                            // Pass the cookie header along from the request
+                            'cookie': req.headers.get('cookie')
+                        },
+                    });
+                    // Use the ID of the newly created food entry
+                    food.id = response.data.id;
+                } catch (error) {
+                    //return error if error
+                    return NextResponse.json(error, {status: 500})
+                }
             }
+            //insert into diary
+            const {data: newDiaryEntry, error: newDiaryEntryError} = await supabase
+                .from('diary')
+                .insert([{
+                    user_id: session.user.id,
+                    food_id: food.id,
+                    date: day,
+                    serving_size: serving_size,
+                    meal_type: meal_type
+                }]).select()
+            //return error if error
+            if (newDiaryEntryError) {
+                //return error if error
+                return NextResponse.json(newDiaryEntryError, {status: 500})
+            }
+            //return new diary entry
+            return NextResponse.json(newDiaryEntry, {status: 200})//
+        } catch (e) {
+            //return error if error
+            return NextResponse.json(e, {status: 500})
         }
-        //insert into diary
-        const {data: newDiaryEntry, error: newDiaryEntryError} = await supabase
-            .from('diary')
-            .insert([{user_id: session.user.id, food_id: food.id, date: day, serving_size: serving_size, meal_type: meal_type}]).select()
-
-        if (newDiaryEntryError) {
-            console.log(newDiaryEntryError)
-            return NextResponse.json(newDiaryEntryError, {status: 500})
-        }
-        return NextResponse.json(newDiaryEntry, {status: 200})//
     }
-
 }
 
-export async function GET(req: NextRequest) {
+export async function GET(req: NextRequest, RoutesProps: RouteProps) {
     const cookieStore = cookies()
     const supabase = createRouteHandlerClient({cookies: () => cookieStore})
 
@@ -70,21 +96,21 @@ export async function GET(req: NextRequest) {
         return NextResponse.json("Unauthorized", {status: 401})//return NextResponse.json({message: 'Work in Progress :D'})
     } else {
         //get all diary entries for user with id = session.user.id for day = req.query.day
-        const {searchParams} = new URL(req.url)
-        const day = searchParams.get('day')
-        if (!day) {
-            return NextResponse.json("Bad Request - please provide search parameters {day=YYYY-MM-DD}", {status: 400})
+        const day = RoutesProps.params.day
+        //check if day is formatted yyyy-mm-dd
+        const dateRegex = new RegExp('^\\d{4}-\\d{2}-\\d{2}$')
+        if (!dateRegex.test(day)) {
+            //return error if not formatted correctly
+            return NextResponse.json("Bad Request - please provide parameters {day=YYYY-MM-DD}", {status: 400})
         }
+        //get all diary entries for user with id = session.user.id for day = req.query.day
         const {data: diaryEntries, error: diaryEntriesError} = await supabase.from('diary')
             .select('food_id, serving_size, meal_type')
             .eq('user_id', session.user.id).eq('date', day)
-
+        //return error if error
         if (diaryEntriesError) {
-            console.log(diaryEntriesError)
             return NextResponse.json(diaryEntriesError, {status: 500})
         }
-        console.log(diaryEntries)
-
         //get all food data for diary entries
         const foodIds = diaryEntries.map((diaryEntry) => diaryEntry.food_id)
         const {data: foodEntries, error: foodEntriesError} = await supabase.from('foods')
@@ -94,7 +120,6 @@ export async function GET(req: NextRequest) {
             console.log(foodEntriesError)
             return NextResponse.json(foodEntriesError, {status: 500})
         }
-
         //combine food data with diary entries
         diaryEntries.forEach((diaryEntry) => {
                 // @ts-ignore

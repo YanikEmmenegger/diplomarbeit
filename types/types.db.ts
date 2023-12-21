@@ -20,6 +20,7 @@ export interface User {
     created_at: string,
     email: string | null,
     firstname: string | null,
+    birthdate: string | null,
     gender: number | null,
     goal_calories: number | null,
     goal_carbs: number | null,
@@ -28,4 +29,19 @@ export interface User {
     id: string,
     name: string | null,
     onboarding_complete: boolean
+}
+
+export interface UserDetail {
+    email?: string,
+    firstname?: string,
+    name?: string,
+    birthdate?: string,
+    gender: number
+}
+
+export interface UserPlan {
+    goal_calories?: number
+    goal_carbs?: number
+    goal_fat?: number
+    goal_protein?: number
 }
