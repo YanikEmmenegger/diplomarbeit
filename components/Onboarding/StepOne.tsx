@@ -64,7 +64,6 @@ const StepOne: FC<StepOneProps> = ({user, setUser, setStepCompleted}) => {
             <label className="block mb-1 text-white">
                 Name:
             </label>
-
             <input
                 type="text"
                 name={"name"}
@@ -74,7 +73,7 @@ const StepOne: FC<StepOneProps> = ({user, setUser, setStepCompleted}) => {
                     setUser({...user, [e.target.name]: e.target.value})
                     validateInput(e.target)
                 }}
-                className="h-auto rounded-lg p-4 opacity-50 focus:opacity-100 transition-opacity outline-none mb-4 border-2 bg-transparent border-CalorieCompass-Primary w-full"
+                className="h-auto rounded-lg p-3 opacity-50 focus:opacity-100 transition-opacity outline-none mb-3 border-2 bg-transparent border-CalorieCompass-Primary w-full"
             />
             <label className="block mb-2 text-white">
                 Vorname:
@@ -89,7 +88,7 @@ const StepOne: FC<StepOneProps> = ({user, setUser, setStepCompleted}) => {
                     setUser({...user, [e.target.name]: e.target.value})
                     validateInput(e.target)
                 }}
-                className="h-auto rounded-lg p-4 opacity-50 focus:opacity-100 transition-opacity outline-none mb-4 border-2 bg-transparent border-CalorieCompass-Primary w-full"
+                className="h-auto rounded-lg p-3 opacity-50 focus:opacity-100 transition-opacity outline-none mb-3 border-2 bg-transparent border-CalorieCompass-Primary w-full"
             />
             <label className="block mb-1 text-white">
                 Vorname:
@@ -104,18 +103,18 @@ const StepOne: FC<StepOneProps> = ({user, setUser, setStepCompleted}) => {
                     setUser({...user, [e.target.name]: e.target.value})
                     validateInput(e.target)
                 }}
-                className="h-auto rounded-lg p-4 opacity-50 focus:opacity-100 transition-opacity outline-none mb-4 border-2 bg-transparent border-CalorieCompass-Primary w-full"
+                className="h-auto rounded-lg p-3 opacity-50 focus:opacity-100 transition-opacity outline-none mb-3 border-2 bg-transparent border-CalorieCompass-Primary w-full"
             />
             <div className="flex flex-row">
                 <button
                     onClick={() => changeGender(1)}
-                    className={twMerge("flex-1 mx-1 h-auto rounded-lg p-4 opacity-75  transition outline-none mb-4 border-2 bg-transparent border-CalorieCompass-Primary", user.gender! === 1 ? 'bg-CalorieCompass-Primary' : 'bg-transparent')}>
+                    className={twMerge("flex-1 mx-1 h-auto rounded-lg p-3 opacity-75  transition outline-none mb-3 border-2 bg-transparent border-CalorieCompass-Primary", user.gender! === 1 ? 'bg-CalorieCompass-Primary' : 'bg-transparent')}>
                     Mann
                 </button>
 
                 <button
                     onClick={() => changeGender(2)}
-                    className={twMerge("flex-1 mx-1 h-auto rounded-lg p-4 opacity-75 transition outline-none mb-4 border-2 bg-transparent border-CalorieCompass-Primary", user.gender! === 2 ? 'bg-CalorieCompass-Primary' : 'bg-transparent')}>
+                    className={twMerge("flex-1 mx-1 h-auto rounded-lg p-3 opacity-75 transition outline-none mb-3 border-2 bg-transparent border-CalorieCompass-Primary", user.gender! === 2 ? 'bg-CalorieCompass-Primary' : 'bg-transparent')}>
                     Frau
                 </button>
             </div>
@@ -132,7 +131,7 @@ const StepOne: FC<StepOneProps> = ({user, setUser, setStepCompleted}) => {
                     setUser({...user, [e.target.name]: e.target.value})
                     validateInput(e.target)
                 }}
-                className="h-auto rounded-lg p-4 opacity-50 focus:opacity-100 transition-opacity outline-none mb-4 border-2 bg-transparent border-CalorieCompass-Primary w-full"
+                className="h-auto rounded-lg p-3 opacity-50 focus:opacity-100 transition-opacity outline-none mb-3 border-2 bg-transparent border-CalorieCompass-Primary w-full"
             />
         </div>
     );

@@ -38,6 +38,8 @@ const StepTwo: FC<StepTwoProps> = ({weight, setWeight, height, setHeight, setSte
             {
                 setStepCompleted(false)
             }
+        }else {
+            setStepCompleted(false)
         }
     }, [weight, height, setStepCompleted])
 
