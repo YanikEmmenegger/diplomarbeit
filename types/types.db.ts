@@ -45,3 +45,8 @@ export interface UserPlan {
     goal_fat?: number
     goal_protein?: number
 }
+
+export interface Weight {
+    created_at: string,
+    weight: number
+}

@@ -36,6 +36,7 @@ export async function POST(req: NextRequest) {
                     .eq('user_id', session.user.id)
                     .eq('created_at', getCurrentDate())
                     .select()
+                    .single()
                 if (error) {
                     return NextResponse.json(error, {status: 500})//return NextResponse.json({message: 'Work in Progress :D'})
                 } else {
@@ -72,11 +73,11 @@ export async function GET(req: NextRequest) {
             .select('height, created_at')
             .eq('user_id', session.user.id)
             .order('created_at', {ascending: false})
-            .limit(7)
+            .limit(1)
         if (error) {
             return NextResponse.json(error, {status: 500})
         } else {
-            return NextResponse.json(data, {status: 200})
+            return NextResponse.json(data[0], {status: 200})
         }
     }
 }

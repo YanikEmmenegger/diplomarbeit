@@ -9,6 +9,8 @@ import PersonalSettings from "@/components/Settings/PersonalSettings";
 import Link from "next/link";
 import Button from "@/components/Button";
 import PlanSettings from "@/components/Settings/PlanSettings";
+import WeightStatistic from "@/components/WeightStatistic";
+import WeightHeightSettings from "@/components/Settings/WeightHeightSettings";
 
 
 interface PageProps {
@@ -30,8 +32,8 @@ const Page: FC<PageProps> = ({params}) => {
                 return <PersonalSettings/>
             case "plan":
                 return <PlanSettings/>
-            case "height-weight":
-                return <div className="text-center">Grösse und Gewicht</div>
+            case "weight-height":
+                return <WeightHeightSettings/>
             default:
                 return <div className="text-center">404</div>
         }
@@ -39,8 +41,8 @@ const Page: FC<PageProps> = ({params}) => {
 
     return (
         <>
-            <div className=" w-4/5 md:w-1/2 mx-auto">
-                <Button className={"text-md"} onClick={router.back}>
+            <div className=" w-[90%] md:w-1/2 mx-auto">
+                <Button className={"text-sm mb-4"} onClick={router.back}>
                     Zurück
                 </Button>
                 {getSetting()}

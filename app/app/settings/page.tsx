@@ -22,8 +22,8 @@ const Page: FC<PageProps> = ({}) => {
                 text: "Plan"
             },
             {
-                link: "/app/settings/height-weight",
-                text: "Grösse und Gewicht"
+                link: "/app/settings/weight-height",
+                text: " Grösse & Gewicht anpassen"
             },
             {
                 link: "/app/onboard",

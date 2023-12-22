@@ -6,16 +6,19 @@ interface OnboardingInputProps {
     name: string;
     placeholder: string;
     label: string;
+    hideLabel?: boolean;
     pattern?: string;
 
 }
 
-const OnboardingInput: FC<OnboardingInputProps> = ({value, onChange, name, label, placeholder, pattern}) => {
+const OnboardingInput: FC<OnboardingInputProps> = ({value, onChange, name, label, placeholder, pattern, hideLabel}) => {
     return (
         <>
-            <label className="block mb-2 text-white">
+            {!hideLabel && <label className="block mb-2 text-white">
                 {label}
-            </label>
+            </label>}
+
+
             <input
                 type="text"
                 name={name}

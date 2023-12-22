@@ -15,8 +15,6 @@ const StepTwo: FC<StepTwoProps> = ({weight, setWeight, height, setHeight, setSte
 
 
     const validateInput = useCallback((input: HTMLInputElement) => {
-        console.log(input.value)
-        console.log(input.name)
         if (input.name === "weight") {
             if (parseInt(input.value) < 31 || parseInt(input.value) > 799 || isNaN(parseInt(input.value))) {
                 input.className = twMerge(input.className, "border-red-500")

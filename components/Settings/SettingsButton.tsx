@@ -10,9 +10,11 @@ interface SettingsButtonProps {
 
 const SettingsButton: FC<SettingsButtonProps> = ({link, text}) => {
     return (
-        <Button className={"w-full"}>
-            <Link href={link}>{text}</Link>
-        </Button>
+        <Link href={link}>
+            <Button className={"w-full"}>
+                {text}
+            </Button>
+        </Link>
     );
 }
 
