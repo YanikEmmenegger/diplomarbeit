@@ -26,6 +26,10 @@ const Page: FC<PageProps> = ({}) => {
                 text: "Grösse und Gewicht"
             },
             {
+                link: "/app/onboard",
+                text: "Onboarding neu starten"
+            },
+            {
                 link: "/api/auth/signout",
                 text: "Logout"
             },

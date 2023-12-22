@@ -1,7 +1,7 @@
 import {createRouteHandlerClient} from '@supabase/auth-helpers-nextjs'
 import {cookies} from 'next/headers'
 import {NextRequest, NextResponse} from 'next/server'
-import {UserDetail} from "@/types/types.db";
+import {UserDetails} from "@/types/types.db";
 
 export async function PATCH(req: NextRequest) {
     //create supabase client
@@ -18,21 +18,22 @@ export async function PATCH(req: NextRequest) {
         //if logged in update user data
         //get new user data from request body
         try {
-            const userDetails: UserDetail = await req.json()
+            const userDetails: UserDetails = await req.json()
 
             // Dynamically construct the update object based on non-undefined properties
-            const updateObject: Partial<UserDetail> = {};
+            const updateObject: Partial<UserDetails> = {};
             if (userDetails.name !== undefined) updateObject.name = userDetails.name;
             if (userDetails.firstname !== undefined) updateObject.firstname = userDetails.firstname;
             if (userDetails.gender !== undefined) updateObject.gender = userDetails.gender;
             if (userDetails.email !== undefined) updateObject.email = userDetails.email;
+            if (userDetails.birthdate !== undefined) updateObject.birthdate = userDetails.birthdate;
 
             // Update user data and return updated user data
             const { data, error } = await supabase
                 .from('users')
                 .update(updateObject)
                 .eq('id', session.user.id)
-                .select('name, firstname, gender, email, birtdhate')
+                .select('name, firstname, gender, email, birthdate')
                 .single();
 
             if (error) {

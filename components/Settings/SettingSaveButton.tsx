@@ -6,12 +6,13 @@ import {twMerge} from "tailwind-merge";
 interface SettingSaveButtonProps {
     active: boolean;
     onClick: () => void;
+    text: string;
 }
 
-const SettingSaveButton: FC<SettingSaveButtonProps> = ({onClick, active}) => {
+const SettingSaveButton: FC<SettingSaveButtonProps> = ({onClick, active ,text}) => {
     return (
-        <Button onClick={onClick} className={twMerge("w-full mt-2", active? "cursor-pointer": "cursor-not-allowed")}>
-            Save
+        <Button disabled={!active} onClick={onClick} className={"w-full mt-2"}>
+            {text}
         </Button>
     );
 }

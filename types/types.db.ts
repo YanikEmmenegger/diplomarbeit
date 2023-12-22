@@ -31,7 +31,7 @@ export interface User {
     onboarding_complete: boolean
 }
 
-export interface UserDetail {
+export interface UserDetails {
     email?: string,
     firstname?: string,
     name?: string,
