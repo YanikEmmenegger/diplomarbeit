@@ -1,17 +1,15 @@
 import {FC, useCallback, useEffect, useMemo, useState} from "react";
 import {useRouter} from "next/navigation";
-import {UserDetails, UserPlan} from "@/types/types.db";
+import {UserPlan} from "@/types/types.db";
 import toast from "react-hot-toast";
 import {twMerge} from "tailwind-merge";
 import OnboardingInput from "@/components/Onboarding/OnboardingInput";
 import SettingSaveButton from "@/components/Settings/SettingSaveButton";
 import axios from "axios";
-import {set} from "date-fns";
 
 interface PlanSettingsProps {
 
 }
-
 const PlanSettings: FC<PlanSettingsProps> = ({}) => {
 
     const router = useRouter();
