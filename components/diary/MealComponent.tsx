@@ -18,21 +18,25 @@ const MealComponent: FC<MealComponentProps> = ({meal}) => {
             </div>
             <div>
                 {
-                    meal.entries.length === 0 ? <FoodItemSkeleton doNotAnimate={true}/> :
-                    (meal.entries.map((entry, index) => {
+                    meal.entries === null ? <FoodItemSkeleton doNotAnimate={false}/> : (
 
-                        console.log(entry);
-                        //@ts-ignore
-                        const foodEntry: FoodEntry = entry;
-                    return (
-                        <div key={index} className={"flex flex-row justify-between border-b-2 border-white"}>
-                            <FoodItem food={foodEntry.food} />
-                        </div>
-                    )
-                }))
+                        meal.entries.length === 0 ? <FoodItemSkeleton doNotAnimate={true}/> :
+                            (meal.entries.map((entry, index) => {
+
+                                    console.log(entry);
+                                    //@ts-ignore
+                                    const foodEntry: FoodEntry = entry;
+                                    return (
+                                        <div key={index}
+                                             className={"flex flex-row justify-between border-b-2 border-white"}>
+                                            <FoodItem food={foodEntry.food}/>
+                                        </div>
+                                    )
+                                })
+                            ))
                 }
             </div>
-            <Button onClick={()=> toast.error("WIP :D")} className={"w-full"}>Add Entry</Button>
+            <Button onClick={() => toast.error("WIP :D")} className={"w-full"}>Add Entry</Button>
         </div>
     );
 }

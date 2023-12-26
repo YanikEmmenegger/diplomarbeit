@@ -62,7 +62,7 @@ export interface Meal {
     carbohydrates: number,
     fat: number,
     protein: number,
-    entries: Food[]
+    entries: Food[] | null
 }
 export interface FoodEntry  {
     calories: number;

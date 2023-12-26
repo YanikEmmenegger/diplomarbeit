@@ -30,7 +30,7 @@ const Page: FC<PageProps> = ({params}) => {
         carbohydrates: 0,
         protein: 0,
         fat: 0,
-        entries: []
+        entries: null
     });
     const [lunch, setLunch] = useState<Meal>({
         name: 'Mittagessen',
@@ -38,7 +38,7 @@ const Page: FC<PageProps> = ({params}) => {
         carbohydrates: 0,
         protein: 0,
         fat: 0,
-        entries: []
+        entries: null
     });
     const [dinner, setDinner] = useState<Meal>({
         name: 'Nachtessen',
@@ -46,7 +46,7 @@ const Page: FC<PageProps> = ({params}) => {
         carbohydrates: 0,
         protein: 0,
         fat: 0,
-        entries: []
+        entries: null
     });
     const [snacks, setSnacks] = useState<Meal>({
         name: 'Snacks',
@@ -54,7 +54,7 @@ const Page: FC<PageProps> = ({params}) => {
         carbohydrates: 0,
         protein: 0,
         fat: 0,
-        entries: []
+        entries: null
     });
 
     const fetchData = async () => {
