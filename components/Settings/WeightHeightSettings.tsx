@@ -16,7 +16,8 @@ const WeightHeightSettings: FC<WeightHeightSettingsProps> = ({}) => {
         <>
             <h1 className="text-xl text-white text-center mb-2">Gewicht & Grösse</h1>
             <ChangeHeight/>
-               <ChangeWeight/>
+            <ChangeWeight/>
+            <WeightStatistic/>
         </>
     );
 }

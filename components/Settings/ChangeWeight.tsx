@@ -6,12 +6,15 @@ import toast from "react-hot-toast";
 import {twMerge} from "tailwind-merge";
 import {Weight} from "@/types/types.db";
 import WeightItem from "@/components/Settings/WeightItem";
+import {useRouter} from "next/navigation";
 
 interface ChangeWeightProps {
 
 }
 
 const ChangeWeight: FC<ChangeWeightProps> = ({}) => {
+
+    const router = useRouter();
 
     const [weights, setWeights] = useState<Weight[]>([]);
     const [oldWeight, setOldWeight] = useState<number | null>(null);
@@ -57,11 +60,14 @@ const ChangeWeight: FC<ChangeWeightProps> = ({}) => {
                 setWeights(newWeights.data);
                 setCurrentWeight(newWeights.data[0].weight)
                 setOldWeight(newWeights.data[0].weight);
+                router.refresh()
             }), {
                 loading: 'Speichern...',
                 success: "Gespeichert!",
                 error: "Fehler beim speichern!",
+
             });
+            //rerender whole page
         } catch (error) {
             console.error('Error fetching user data:', error);
         }
@@ -106,6 +112,7 @@ const ChangeWeight: FC<ChangeWeightProps> = ({}) => {
                         </ul>
                     </> : <></>}
             </div>
+
         </>
     )
 }

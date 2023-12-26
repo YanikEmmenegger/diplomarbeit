@@ -50,3 +50,8 @@ export interface Weight {
     created_at: string,
     weight: number
 }
+
+export interface Stats {
+    max: number,
+    current: number,
+}

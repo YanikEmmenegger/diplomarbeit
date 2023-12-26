@@ -4,12 +4,15 @@ import Button from "@/components/Button";
 import axios from "axios";
 import toast from "react-hot-toast";
 import {twMerge} from "tailwind-merge";
+import {useRouter} from "next/navigation";
 
 interface ChangeHeightProps {
 
 }
 
 const ChangeHeight: FC<ChangeHeightProps> = ({}) => {
+
+    const router = useRouter();
 
     const [height, setHeight] = useState<number | string>("loading...");
     const [oldHeight, setOldHeight] = useState<number | null>(null);
@@ -56,6 +59,7 @@ const ChangeHeight: FC<ChangeHeightProps> = ({}) => {
                 success: "Gespeichert!",
                 error: "Fehler beim speichern!",
             });
+            router.refresh();
         } catch (error) {
             console.error('Error fetching user data:', error);
         }

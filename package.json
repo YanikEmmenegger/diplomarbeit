@@ -10,6 +10,7 @@
     "update-types": "npx supabase gen types typescript --project-id lrubmhhalftaipjmkubq > types/supabaseDatabaseTypes.ts"
   },
   "dependencies": {
+    "@alptugidin/react-circular-progress-bar": "^1.1.2",
     "@radix-ui/react-dialog": "^1.0.5",
     "@supabase/auth-helpers-nextjs": "^0.8.7",
     "@supabase/auth-helpers-react": "^0.4.2",
