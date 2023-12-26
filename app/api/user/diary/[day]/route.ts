@@ -157,7 +157,7 @@ export async function GET(req: NextRequest, RoutesProps: RouteProps) {
                     carbohydrates: diaryEntries.filter((diaryEntry) => diaryEntry.meal_type === 1).reduce((total, diaryEntry) => total + diaryEntry.food.carbohydrates * diaryEntry.serving_size, 0),
                     //@ts-ignore
                     fat: diaryEntries.filter((diaryEntry) => diaryEntry.meal_type === 1).reduce((total, diaryEntry) => total + diaryEntry.food.fat * diaryEntry.serving_size, 0),
-                    entries: [diaryEntries.filter((diaryEntry) => diaryEntry.meal_type === 1),]
+                    entries: diaryEntries.filter((diaryEntry) => diaryEntry.meal_type === 1)
                 },
                 lunch: {
                     //@ts-ignore
@@ -169,7 +169,7 @@ export async function GET(req: NextRequest, RoutesProps: RouteProps) {
                     //@ts-ignore
                     fat: diaryEntries.filter((diaryEntry) => diaryEntry.meal_type === 2).reduce((total, diaryEntry) => total + diaryEntry.food.fat * diaryEntry.serving_size, 0),
                     //@ts-ignore
-                    entries: [diaryEntries.filter((diaryEntry) => diaryEntry.meal_type === 2),]
+                    entries: diaryEntries.filter((diaryEntry) => diaryEntry.meal_type === 2)
                 },
                 dinner: {
                     //@ts-ignore
@@ -180,7 +180,7 @@ export async function GET(req: NextRequest, RoutesProps: RouteProps) {
                     carbohydrates: diaryEntries.filter((diaryEntry) => diaryEntry.meal_type === 3).reduce((total, diaryEntry) => total + diaryEntry.food.carbohydrates * diaryEntry.serving_size, 0),
                     //@ts-ignore
                     fat: diaryEntries.filter((diaryEntry) => diaryEntry.meal_type === 3).reduce((total, diaryEntry) => total + diaryEntry.food.fat * diaryEntry.serving_size, 0),
-                    entries: [diaryEntries.filter((diaryEntry) => diaryEntry.meal_type === 3),]
+                    entries: diaryEntries.filter((diaryEntry) => diaryEntry.meal_type === 3)
                 },
                 snacks: {
                     //@ts-ignore
@@ -191,7 +191,7 @@ export async function GET(req: NextRequest, RoutesProps: RouteProps) {
                     carbohydrates: diaryEntries.filter((diaryEntry) => diaryEntry.meal_type === 4).reduce((total, diaryEntry) => total + diaryEntry.food.carbohydrates * diaryEntry.serving_size, 0),
                     //@ts-ignore
                     fat: diaryEntries.filter((diaryEntry) => diaryEntry.meal_type === 4).reduce((total, diaryEntry) => total + diaryEntry.food.fat * diaryEntry.serving_size, 0),
-                    entries: [diaryEntries.filter((diaryEntry) => diaryEntry.meal_type === 4),]
+                    entries: diaryEntries.filter((diaryEntry) => diaryEntry.meal_type === 4)
                 }
             }
         }

@@ -17,10 +17,14 @@ const CircleChart: FC<CircleChartProps> = ({percentage, strokeColor, heading, ma
     const [showPercentage, setShowPercentage] = useState<boolean>(max === 0);
 
 
-
     strokeColor = strokeColor ? strokeColor : "#3ecb00";
 
-    if (percentage > 100) strokeColor = "#ff0000";
+    const to = percentage > 100 ?percentage: 100;
+
+    if (percentage > 100) {
+        strokeColor = "#ff0000";
+        //percentage = 100;
+    }
 
 
     return (
@@ -30,7 +34,7 @@ const CircleChart: FC<CircleChartProps> = ({percentage, strokeColor, heading, ma
             <h1 className="text-white text-center text-xl mb-2">{heading}</h1>
             <Flat
                 progress={percentage}
-                range={{from: 0, to: 100}}
+                range={{from: 0, to: to}}
                 sign={{value: '%', position: 'end'}}
                 text={!showPercentage && max !== 0 ? `${current}/${max}${unit}` : ''}
                 showMiniCircle={false}

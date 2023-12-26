@@ -4,6 +4,10 @@ import {useRouter} from "next/navigation";
 import {format} from "date-fns";
 import {de} from "date-fns/locale";
 import axios from "axios";
+import {Meal} from "@/types/types.db";
+import MealComponent from "@/components/diary/MealComponent";
+import DiaryNavigation from "@/components/diary/DiaryNavigation";
+import {index} from "d3-array";
 
 
 interface PageProps {
@@ -20,64 +24,85 @@ const Page: FC<PageProps> = ({params}) => {
     const prevDay = new Date(siteDate.setDate(siteDate.getDate() - 2)).toISOString().slice(0, 10);
     const router = useRouter();
 
-    const [breakfast, setBreakfast] = useState([]);
-    const [lunch, setLunch] = useState([]);
-    const [dinner, setDinner] = useState([]);
-    const [snacks, setSnacks] = useState([]);
+    const [breakfast, setBreakfast] = useState<Meal>({
+        name: 'Frühstück',
+        calories: 0,
+        carbohydrates: 0,
+        protein: 0,
+        fat: 0,
+        entries: []
+    });
+    const [lunch, setLunch] = useState<Meal>({
+        name: 'Mittagessen',
+        calories: 0,
+        carbohydrates: 0,
+        protein: 0,
+        fat: 0,
+        entries: []
+    });
+    const [dinner, setDinner] = useState<Meal>({
+        name: 'Nachtessen',
+        calories: 0,
+        carbohydrates: 0,
+        protein: 0,
+        fat: 0,
+        entries: []
+    });
+    const [snacks, setSnacks] = useState<Meal>({
+        name: 'Snacks',
+        calories: 0,
+        carbohydrates: 0,
+        protein: 0,
+        fat: 0,
+        entries: []
+    });
+
+    const fetchData = async () => {
+        console.log('/api/user/diary/' + params.date);
+        try {
+            const axiosResponse = await axios.get('/api/user/diary/' + params.date);
+            setDiary(axiosResponse.data);
+            setBreakfast({...breakfast, ...axiosResponse.data.meals.breakfast});
+            setLunch({...lunch, ...axiosResponse.data.meals.lunch});
+            setDinner({...dinner, ...axiosResponse.data.meals.dinner});
+            setSnacks({...snacks, ...axiosResponse.data.meals.snacks});
+        } catch (error) {
+            console.error(error)
+        }
+    };
 
 
-    const [data, setData] = useState(null);
-    const [error, setError] = useState(null);
+    const [diary, setDiary] = useState();
 
     useEffect(() => {
-        const fetchData = async () => {
-            console.log('/api/user/diary/' + params.date);
-            try {
-                const axiosResponse = await axios.get('/api/user/diary/' + params.date);
-                setData(axiosResponse.data);
-            } catch (e: any) {
-                setError(e);
-            }
-        };
-
-        fetchData();
+        const timeout = setTimeout(() => {
+            fetchData().then();
+        }, 500);
+        return () => clearTimeout(timeout);
     }, [params.date]);
 
 
-    const rightSwipe = () => {
+    const goPrevDay = () => {
         router.replace(`/app/diary/${prevDay}`)
     }
-    const leftSwipe = () => {
+    const goNextDay = () => {
         router.replace(`/app/diary/${nextDay}`)
     }
 
     return (
         <>
-            <h1 className="">{getDisplayNameofDate(params.date, today)}</h1>
-            <button onClick={rightSwipe}>Zurück</button>
-            <button onClick={leftSwipe}>Nächster tag</button>
-            <div>{
-                //@ts-ignore
-            }</div>
+            <DiaryNavigation onNext={goNextDay} onPrev={goPrevDay} date={params.date}/>
+            <div className={"grid gap-6 mt-5 grid-cols-1 w-full md:w-4/5 mx-auto md:grid-cols-2 2xl:grid-cols-4"}>
+                <MealComponent meal={breakfast}/>
+                <MealComponent meal={lunch}/>
+                <MealComponent meal={dinner}/>
+                <MealComponent meal={snacks}/>
+
+
+            </div>
         </>
     )
 
-}
-
-const getDisplayNameofDate = (siteDate: string, todayDate: string): string => {
-
-    //Add logic to display "Yesterday" if siteDate is yesterday
-    const yesterday = new Date(new Date().setDate(new Date().getDate() - 1)).toISOString().slice(0, 10);
-    if (siteDate === yesterday) return "Gestern";
-    //logic to display "Today" if siteDate is today
-    if (siteDate === todayDate) return "Heute";
-    //logic to display "Tomorrow" if siteDate is tomorrow
-    const tomorrow = new Date(new Date().setDate(new Date().getDate() + 1)).toISOString().slice(0, 10);
-    if (siteDate === tomorrow) return "Morgen";
-    //Logic to display the date if none of the above
-    const date = new Date(siteDate);
-
-    return format(date, "EE, dd MMM", {locale: de});
 }
 
 export default Page;

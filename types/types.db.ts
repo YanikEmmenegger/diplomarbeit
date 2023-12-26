@@ -55,3 +55,20 @@ export interface Stats {
     max: number,
     current: number,
 }
+
+export interface Meal {
+    name: string,
+    calories: number,
+    carbohydrates: number,
+    fat: number,
+    protein: number,
+    entries: Food[]
+}
+export interface FoodEntry  {
+    calories: number;
+    food_id: number;
+    serving_size: number;
+    meal_type: number;
+    food:Food
+
+};
