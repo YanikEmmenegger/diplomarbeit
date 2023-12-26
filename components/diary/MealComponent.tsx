@@ -18,7 +18,7 @@ const MealComponent: FC<MealComponentProps> = ({meal}) => {
             </div>
             <div>
                 {
-                    meal.entries.length === 0 ? <FoodItemSkeleton animate={false}/> :
+                    meal.entries.length === 0 ? <FoodItemSkeleton doNotAnimate={true}/> :
                     (meal.entries.map((entry, index) => {
 
                         console.log(entry);
