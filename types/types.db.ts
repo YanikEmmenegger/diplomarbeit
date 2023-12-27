@@ -65,10 +65,18 @@ export interface Meal {
     entries: Food[] | null
 }
 export interface FoodEntry  {
+    id?: number;
     calories: number;
-    food_id: number;
+    food_id?: number;
     serving_size: number;
     meal_type: number;
-    food:Food
-
-};
+    food:Food,
+    date? : string
+}
+export interface FoodModalItem {
+    id?: number;
+    food: Food;
+    serving_size: number;
+    meal_type: number;
+    date? : string
+}

@@ -4,8 +4,10 @@ import Modal from "@/components/Modal";
 import useFoodModal from "@/hooks/useFoodModal";
 import Image from "next/image";
 import {twMerge} from "tailwind-merge";
-
-
+import {useState} from "react";
+import {getDisplayNameofDate} from "@/components/diary/DiaryNavigation";
+import {Food, FoodEntry} from "@/types/types.db";
+import FoodModalContent from "@/components/Food/FoodModalContent";
 
 
 const FoodModal = ({}) => {
@@ -15,19 +17,12 @@ const FoodModal = ({}) => {
             foodModal.onClose()
         }
     }
+
     return (
-        <Modal isOpen={foodModal.isOpen} onChange={onChange} title={foodModal.food.name} description={foodModal.food.brand!} >
-            <div className={"flex flex-col items-center justify-center"}>
-                <div className="flex flex-row gap-x-4">
-                    <Image
-                        width={100}
-                        height={100}
-                        className={twMerge("h-12 w-12 transition-opacity flex-none rounded-full bg-gray-50")}
-                        src={foodModal.food.image || "/images/logo.png"}
-                        alt=""
-                        loading={"lazy"}
-                    />
-                </div>
+        <Modal isOpen={foodModal.isOpen} onChange={onChange} title="Nahrungsmittel hinzufügen"
+               description={""}>
+            <div className={"flex flex-col gap-6 w-full"}>
+                <FoodModalContent foodModalItem={foodModal.foodModalItem}/>
 
             </div>
         </Modal>

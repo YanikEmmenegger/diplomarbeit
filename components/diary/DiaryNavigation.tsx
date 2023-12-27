@@ -26,7 +26,7 @@ const DiaryNavigation: FC<DiaryNavigationProps> = ({date, onPrev, onNext}) => {
 
 export default DiaryNavigation;
 
-const getDisplayNameofDate = (siteDate: string, todayDate: string): string => {
+export const getDisplayNameofDate = (siteDate: string, todayDate: string): string => {
 
     //Add logic to display "Yesterday" if siteDate is yesterday
     const yesterday = new Date(new Date().setDate(new Date().getDate() - 1)).toISOString().slice(0, 10);

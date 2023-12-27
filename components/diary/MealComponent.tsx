@@ -1,42 +1,54 @@
+'use client'
 import {FC} from "react";
-import {FoodEntry, Meal} from "@/types/types.db";
+import {FoodEntry, FoodModalItem, Meal} from "@/types/types.db";
 import Button from "@/components/Button";
-import FoodItem from "@/components/Food/FoodItem";
-import FoodItemSkeleton from "@/components/Food/FoodItemSkeleton";
-import toast from "react-hot-toast";
+
+import DiaryItem from "@/components/diary/DiaryItem";
+import {useRouter} from "next/navigation";
+import DiaryItemSkeleton from "@/components/diary/DiaryItemSkeleton";
 
 interface MealComponentProps {
     meal: Meal
+    meal_type: number
+    date: string
 }
 
-const MealComponent: FC<MealComponentProps> = ({meal}) => {
+const MealComponent: FC<MealComponentProps> = ({meal, date, meal_type}) => {
+    const router = useRouter();
     return (
         <div className='p-1 w-full'>
-            <div className={"flex flex-row justify-between pb-2 border-b-2 border-white"}>
+            <div className={"flex flex-row justify-between"}>
                 <h1 className={"text-xl pl-3"}>{meal.name}</h1>
-                <h1 className={"text-xl pr-3"}>{meal.calories}</h1>
+                <h1 className={"text-xl pr-3"}>{meal.calories === 0 ? "" : Math.round(meal.calories)}</h1>
+            </div>
+            <div>
+                <p className={"text-xs pl-3 pb-2 border-white border-b-2 mb-1"}>K: {Math.round(meal.protein)} |
+                    F: {Math.round(meal.fat)} | P: {Math.round(meal.protein)}</p>
             </div>
             <div>
                 {
-                    meal.entries === null ? <FoodItemSkeleton doNotAnimate={false}/> : (
+                    meal.entries === null ? <DiaryItemSkeleton animate/> : (
 
-                        meal.entries.length === 0 ? <FoodItemSkeleton doNotAnimate={true}/> :
-                            (meal.entries.map((entry, index) => {
+                        meal.entries.length === 0 ? <DiaryItemSkeleton/> :
+                            (meal.entries.map((entry: any, index) => {
+                                    const foodModalItem: FoodModalItem = {
+                                        date: date,
+                                        meal_type: meal_type,
+                                        food: entry.food,
+                                        id: entry.id,
+                                        serving_size: entry.serving_size
+                                    }
 
-                                    console.log(entry);
                                     //@ts-ignore
-                                    const foodEntry: FoodEntry = entry;
                                     return (
-                                        <div key={index}
-                                             className={"flex flex-row justify-between border-b-2 border-white"}>
-                                            <FoodItem food={foodEntry.food}/>
-                                        </div>
+                                        <DiaryItem key={index} foodModalItem={foodModalItem}/>
                                     )
                                 })
                             ))
                 }
             </div>
-            <Button onClick={() => toast.error("WIP :D")} className={"w-full"}>Add Entry</Button>
+            <Button onClick={() => router.push("/app/food/" + date + "/" + meal_type)}
+                    className={" text-sm"}>Hinzufügen</Button>
         </div>
     );
 }

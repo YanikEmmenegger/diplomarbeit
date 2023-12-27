@@ -1,20 +1,20 @@
 import {create} from "zustand";
-import {Food} from "@/types/types.db";
+import {Food, FoodEntry, FoodModalItem} from "@/types/types.db";
 
 interface FoodModalStore{
     isOpen: boolean,
-    food: Food,
-    onOpen: (newFood: Food)=> void,
+    foodModalItem: FoodModalItem,
+    onOpen: (newFoodModalItem: FoodModalItem)=> void,
     onClose: ()=> void
 }
 
 const useFoodModal = create<FoodModalStore>((set) => ({
     isOpen: false,
-    food: {} as Food,
-    onOpen: (newFood) => {
-        set({isOpen: true, food: newFood})
+    foodModalItem: {} as FoodModalItem,
+    onOpen: (newFoodModalItem, ) => {
+        set({isOpen: true, foodModalItem: newFoodModalItem})
     },
-    onClose: () => set({isOpen: false, food: {} as Food}),
+    onClose: () => set({isOpen: false, foodModalItem: {} as FoodModalItem}),
 }))
 
 export default useFoodModal

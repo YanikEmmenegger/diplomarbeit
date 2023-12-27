@@ -2,7 +2,9 @@ import {createRouteHandlerClient} from '@supabase/auth-helpers-nextjs'
 import {cookies} from 'next/headers'
 import {NextRequest, NextResponse} from 'next/server'
 import axios from "axios";
-import {Food} from "@/types/types.db";
+import {Food, Weight} from "@/types/types.db";
+import {convertToTSFood} from "@/actions/searchFoodHandler";
+import {relativizeURL} from "next/dist/shared/lib/router/utils/relativize-url";
 
 //set up types for request body
 interface RequestBody {
@@ -85,6 +87,80 @@ export async function POST(req: NextRequest, RoutesProps: RouteProps) {
     }
 }
 
+
+export async function DELETE(req: NextRequest, RoutesProps: RouteProps) {
+    const cookieStore = cookies()
+    const supabase = createRouteHandlerClient({cookies: () => cookieStore})
+
+    const {
+        data: {session},
+    } = await supabase.auth.getSession()
+    if (!session) {
+        return NextResponse.json("Unauthorized", {status: 401})//return NextResponse.json({message: 'Work in Progress :D'})
+    } else {
+        //get all diary entries for user with id = session.user.id for day = req.query.day
+        const id: number = await req.json()
+
+        try {
+            //delete diary entry
+            const {data, error} = await supabase
+                .from('diary')
+                .delete()
+                .eq('id', id)
+                .select()
+            //return error if error
+            if (error) {
+                return NextResponse.json(error, {status: 500})
+            } else {
+                return NextResponse.json(data, {status: 200})
+            }
+        } catch (e) {
+            //return error if error
+            return NextResponse.json(e, {status: 500})
+        }
+
+
+    }
+
+}
+
+export async function PATCH(req: NextRequest, RoutesProps: RouteProps) {
+    const cookieStore = cookies()
+    const supabase = createRouteHandlerClient({cookies: () => cookieStore})
+
+    const {
+        data: {session},
+    } = await supabase.auth.getSession()
+    if (!session) {
+        return NextResponse.json("Unauthorized", {status: 401})//return NextResponse.json({message: 'Work in Progress :D'})
+    } else {
+
+        const {food, serving_size, meal_type, id} = await req.json()
+
+        try {
+            //delete diary entry
+            const {data, error} = await supabase
+                .from('diary')
+                .update({serving_size: serving_size, meal_type: meal_type})
+                .eq('id', id)
+                .select()
+            //return error if error
+            if (error) {
+                return NextResponse.json(error, {status: 500})
+            } else {
+                return NextResponse.json(data, {status: 200})
+            }
+        } catch (e) {
+            //return error if error
+            return NextResponse.json(e, {status: 500})
+        }
+
+
+    }
+
+}
+
+
 export async function GET(req: NextRequest, RoutesProps: RouteProps) {
     const cookieStore = cookies()
     const supabase = createRouteHandlerClient({cookies: () => cookieStore})
@@ -105,7 +181,7 @@ export async function GET(req: NextRequest, RoutesProps: RouteProps) {
         }
         //get all diary entries for user with id = session.user.id for day = req.query.day
         const {data: diaryEntries, error: diaryEntriesError} = await supabase.from('diary')
-            .select('food_id, serving_size, meal_type')
+            .select('id, food_id, serving_size, meal_type')
             .eq('user_id', session.user.id).eq('date', day)
         //return error if error
         if (diaryEntriesError) {
@@ -114,16 +190,35 @@ export async function GET(req: NextRequest, RoutesProps: RouteProps) {
         //get all food data for diary entries
         const foodIds = diaryEntries.map((diaryEntry) => diaryEntry.food_id)
         const {data: foodEntries, error: foodEntriesError} = await supabase.from('foods')
-            .select('id, name, calories, protein, carbohydrates, fat, image, salt, sugar, saturated_fat, unit')
-            .in('id', foodIds)
+            .select(
+                `id,
+                 name,
+                 brands(name),
+                 barcode,
+                 serving_factor,
+                 units(unit),
+                 calories,
+                 fat,
+                 saturated_fat,
+                 carbohydrates,
+                 sugar,
+                 protein,
+                 salt,
+                 image,
+                 source
+                 `).in('id', foodIds)
         if (foodEntriesError) {
             console.log(foodEntriesError)
             return NextResponse.json(foodEntriesError, {status: 500})
         }
         //combine food data with diary entries
+
+        let updatedFoods: Food[] = []
+        updatedFoods.push(...foodEntries?.map((food) => convertToTSFood(food)))
+
         diaryEntries.forEach((diaryEntry) => {
                 // @ts-ignore
-                diaryEntry.food = foodEntries.find((foodEntry) => foodEntry.id === diaryEntry.food_id)
+                diaryEntry.food = updatedFoods.find((foodEntry) => foodEntry.id === diaryEntry.food_id)
                 //calculate calories
                 //@ts-ignore
                 diaryEntry.calories = diaryEntry.food.calories * diaryEntry.serving_size
