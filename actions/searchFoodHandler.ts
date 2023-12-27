@@ -92,11 +92,11 @@ const searchFood = async (search_options: searchOptions, supabase:SupabaseClient
     return foods
 }
 export {searchFood}
-const convertToTSFood = (food: any): Food => {
+export const convertToTSFood = (food: any): Food => {
     return {
         id: food.id,
         name: food.name,
-        brand: food.brands.brand_name || null,
+        brand: food.brands.name || null,
         barcode: food.barcode,
         serving_factor: food.serving_factor,
         unit: food.units.unit || 'g',

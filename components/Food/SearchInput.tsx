@@ -1,13 +1,17 @@
 'use client'
 
 import {useRouter} from "next/navigation";
-import {useEffect, useState} from "react";
+import {FC, useEffect, useState} from "react";
 import useDebounce from "@/hooks/useDebouncer";
 
 import qs from "query-string"
 import Input from "@/components/Input";
 
-const SearchInput = () =>{
+interface SearchInputProps {
+    date_meal: string;
+}
+
+const SearchInput: FC<SearchInputProps> = ({date_meal}) => {
 
     const router = useRouter()
     const [value, setValue] = useState<string>("")
@@ -19,7 +23,7 @@ const SearchInput = () =>{
         }
 
         const url = qs.stringifyUrl({
-            url: '/app/food',
+            url: '/app/food/' + date_meal,
             query: query
         })
         router.push(url)

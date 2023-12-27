@@ -1,16 +1,20 @@
+'use client';
 import {FC} from "react";
+import Button from "@/components/Button";
+import {useRouter} from "next/navigation";
 
 interface SignOutButtonProps {
 
 }
 
 const SignOutButton: FC<SignOutButtonProps> = ({}) => {
+
+    const router = useRouter();
+
     return (
-        <form action="/api/auth/signout" method="post">
-            <button id={"cc-button-signout"} className="cc-button-normal" type="submit">
-                Sign out
-            </button>
-        </form>
+        <Button onClick={()=>router.push("/api/auth/signout")}>
+            Sign Out
+        </Button>
     );
 }
 

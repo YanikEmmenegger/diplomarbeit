@@ -4,9 +4,11 @@ import FoodItem from "@/components/Food/FoodItem";
 
 interface FoodTableProps {
     foods: Food[]
+    date: string
+    meal: number
 }
 
-const FoodTable: FC<FoodTableProps> = ({foods}) => {
+const FoodTable: FC<FoodTableProps> = ({foods, meal, date}) => {
     return (
         <div className={"container px-2"}>
             {foods.length === 0 ?
@@ -16,7 +18,7 @@ const FoodTable: FC<FoodTableProps> = ({foods}) => {
                     <h1 className="mb-3 text-xs md:text-base">Results: {foods.length} | ✅ CalorieCompass
                         Datensatz❗externe Datenquelle, Nährwerte prüfen</h1>
                     <ul role="list" className="divide-y divide-gray-100">
-                        {foods.map((food, index) => <FoodItem key={index} food={food}/>)}
+                        {foods.map((food, index) => <FoodItem meal={meal} date={date} key={index} food={food}/>)}
                     </ul>
                 </div>}
         </div>

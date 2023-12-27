@@ -1,7 +1,9 @@
+import CalorieStatistic from "@/components/CalorieStatistic";
+
 const Page = () => {
     return (
-        <div className='cc-page'>
-            Dashboard - Protected
+        <div className='cc-page mx-auto text-center'>
+            <CalorieStatistic />
         </div>
     );
 }
