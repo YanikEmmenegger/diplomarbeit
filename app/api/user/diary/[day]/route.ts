@@ -2,9 +2,8 @@ import {createRouteHandlerClient} from '@supabase/auth-helpers-nextjs'
 import {cookies} from 'next/headers'
 import {NextRequest, NextResponse} from 'next/server'
 import axios from "axios";
-import {Food, Weight} from "@/types/types.db";
+import {Food} from "@/types/types.db";
 import {convertToTSFood} from "@/actions/searchFoodHandler";
-import {relativizeURL} from "next/dist/shared/lib/router/utils/relativize-url";
 
 //set up types for request body
 interface RequestBody {
@@ -45,11 +44,22 @@ export async function POST(req: NextRequest, RoutesProps: RouteProps) {
         try {
             //get food, serving_size and meal_type from request body {food: Food, serving_size: number, meal_type: number}
             const {food, serving_size, meal_type}: RequestBody = await req.json()
+
+            const getURL = () => {
+                // Automatically set by Vercel.
+                // Make sure to include `https://` when not localhost.
+
+                return process?.env?.NEXT_PUBLIC_VERCEL_ENV === 'production' ?
+                    "https://caloriecompass.ch/" :
+                    process?.env?.NEXT_PUBLIC_VERCEL_URL!
+            }
+
+
             //check if food exists by checking if food.id is set
             if (!food.id) {
                 try {
                     // If no ID, make a POST request to create a new food entry
-                    const response = await axios.post('http://localhost:3000/api/food', food, {
+                    const response = await axios.post(getURL()+'/api/food', food, {
                         headers: {
                             'Content-Type': 'application/json',
                             // Pass the cookie header along from the request
@@ -154,8 +164,6 @@ export async function PATCH(req: NextRequest, RoutesProps: RouteProps) {
             //return error if error
             return NextResponse.json(e, {status: 500})
         }
-
-
     }
 
 }
