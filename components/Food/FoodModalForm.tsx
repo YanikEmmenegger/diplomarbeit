@@ -106,22 +106,26 @@ const FoodModalForm: FC<FoodModalFormProps> = ({foodModalItem}) => {
         <div className={"my-4"}>
             <div className="flex mt-2 flex-row w-auto gap-2 overflow-x-auto">
                 <button
+                    id={"foodmodal-form-breakfast"}
                     onClick={() => changeMealType(1)}
                     className={twMerge("flex-1 mx-1 h-auto rounded-lg p-3 opacity-75  transition outline-none mb-3 border-2 bg-transparent border-CalorieCompass-Primary", foodEntryState.meal_type === 1 ? 'bg-CalorieCompass-Primary' : 'bg-transparent')}>
                     Frühstück
                 </button>
 
                 <button
+                    id={"foodmodal-form-lunch"}
                     onClick={() => changeMealType(2)}
                     className={twMerge("flex-1 mx-1 h-auto rounded-lg p-3 opacity-75 transition outline-none mb-3 border-2 bg-transparent border-CalorieCompass-Primary", foodEntryState.meal_type === 2 ? 'bg-CalorieCompass-Primary' : 'bg-transparent')}>
                     Mittagessen
                 </button>
                 <button
+                    id={"foodmodal-form-dinner"}
                     onClick={() => changeMealType(3)}
                     className={twMerge("flex-1 mx-1 h-auto rounded-lg p-3 opacity-75 transition outline-none mb-3 border-2 bg-transparent border-CalorieCompass-Primary", foodEntryState.meal_type === 3 ? 'bg-CalorieCompass-Primary' : 'bg-transparent')}>
                     Nachtessen
                 </button>
                 <button
+                    id={"foodmodal-form-snack"}
                     onClick={() => changeMealType(4)}
                     className={twMerge("flex-1 mx-1 h-auto rounded-lg p-3 opacity-75 transition outline-none mb-3 border-2 bg-transparent border-CalorieCompass-Primary", foodEntryState.meal_type === 4 ? 'bg-CalorieCompass-Primary' : 'bg-transparent')}>
                     Snacks
@@ -129,7 +133,7 @@ const FoodModalForm: FC<FoodModalFormProps> = ({foodModalItem}) => {
             </div>
             <div className="grid mt-5 grid-cols-7 mx-auto w-[95%] gap-5 items-center">
                 <div className="col-span-4">
-                    <OnboardingInput value={foodEntryState.serving_size * 100} onChange={(input) => {
+                    <OnboardingInput id={"foodmodal-form-servingsize"} value={foodEntryState.serving_size * 100} onChange={(input) => {
                         const value = parseInt(input.value) ? parseInt(input.value) / 100 : 0;
                         setFoodEntryState({...foodEntryState, [input.name]: value});
                         //validateInput(input);
@@ -138,17 +142,16 @@ const FoodModalForm: FC<FoodModalFormProps> = ({foodModalItem}) => {
                                      label={"Menge in (" + foodEntryState.food.unit + ")"}/>
                 </div>
                 <div className="col-span-3 mt-8">
-                    <Button onClick={saveDiaryEntry} disabled={!saveButtonActive}
+                    <Button id={"foodmodal-form-save"} onClick={saveDiaryEntry} disabled={!saveButtonActive}
                             className={"w-full text-sm mb-2 p-4"}>{"speichern"}</Button>
                 </div>
             </div>
             {foodEntryState.id &&
                 <div className={" mt-24 w-1/2 mx-auto text-center"}>
-                    <Button onClick={deleteDiaryEntry}
+                    <Button id={"foodmodal-form-delete"} onClick={deleteDiaryEntry}
                             className={"text-lg bg-red-700"}>löschen</Button>
                 </div>
             }
-
         </div>
     )
 }

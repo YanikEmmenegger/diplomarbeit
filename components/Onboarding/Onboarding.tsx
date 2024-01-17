@@ -83,7 +83,7 @@ const Onboarding = () => {
             } else {
                 switch (currentStep) {
                     case 1:
-                        toast.promise(axios.patch("/api/user", user), {
+                        await toast.promise(axios.patch("/api/user", user), {
                             loading: 'Speichere Daten...',
                             success: 'Daten gespeichert',
                             error: 'Fehler beim Speichern'

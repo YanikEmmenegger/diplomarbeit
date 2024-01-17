@@ -12,10 +12,10 @@ const OnboardingNavigation: FC<OnboardingNavigationProps> = ({currentStep, onNex
     return (
         <div className="fixed bottom-10 mx-auto w-4/5 md:w-1/2">
             <div className="flex-row relative">
-                <Button disabled={currentStep ===1} onClick={onBack} className="float-left">
+                <Button id={"onboard-btn-back"} disabled={currentStep ===1} onClick={onBack} className="float-left">
                     Zurück
                 </Button>
-                <Button onClick={onNext} className="float-right">
+                <Button id={"onboard-btn-next"} onClick={onNext} className="float-right">
                     {currentStep === 5 ? "Abschliessen" : "Weiter"}
                 </Button>
             </div>

@@ -26,7 +26,6 @@ const PersonalSettings: FC<PersonalSettingsProps> = ({}) => {
     const fetchUserDetails = async () => {
         try {
             const response = await axios.get("/api/user/details")
-            console.log(response.data)
             setUserDetails(response.data);
             setOldUserDetails(response.data)
         } catch (error) {
@@ -143,15 +142,15 @@ const PersonalSettings: FC<PersonalSettingsProps> = ({}) => {
                     }} name={"email"} placeholder="Email" label={"Email:"}/>
 
                     <div className="flex mt-2 flex-row">
-                        <button
+                        <button id={"onboard-btn-gender-male"}
                             onClick={() => changeGender(1)}
-                            className={twMerge("flex-1 mx-1 h-auto rounded-lg p-3 opacity-75  transition outline-none mb-3 border-2 bg-transparent border-CalorieCompass-Primary", userDetails!.gender! === 1 ? 'bg-CalorieCompass-Primary' : 'bg-transparent')}>
+                            className={twMerge("flex-1 mx-1 h-auto rounded-lg p-3 opacity-75  transition outline-none mb-3 border-2 bg-transparent border-CalorieCompass-Primary", userDetails!.gender! === 1 ? 'bg-CalorieCompass-Primary gender-active' : 'bg-transparent')}>
                             Mann
                         </button>
 
-                        <button
+                        <button id={"onboard-btn-gender-female"}
                             onClick={() => changeGender(2)}
-                            className={twMerge("flex-1 mx-1 h-auto rounded-lg p-3 opacity-75 transition outline-none mb-3 border-2 bg-transparent border-CalorieCompass-Primary", userDetails!.gender! === 2 ? 'bg-CalorieCompass-Primary' : 'bg-transparent')}>
+                            className={twMerge("flex-1 mx-1 h-auto rounded-lg p-3 opacity-75 transition outline-none mb-3 border-2 bg-transparent border-CalorieCompass-Primary", userDetails!.gender! === 2 ? 'bg-CalorieCompass-Primary gender-active' : 'bg-transparent')}>
                             Frau
                         </button>
                     </div>

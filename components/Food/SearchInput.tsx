@@ -30,7 +30,7 @@ const SearchInput: FC<SearchInputProps> = ({date_meal}) => {
     }, [deboundedValue, router]);
 
     return (
-        <Input placeholder="Enter Foodname or Brand? " value={value} onChange={(e) => setValue(e.target.value)} />
+        <Input id={"food-input-search"} placeholder="Enter Foodname or Brand? " value={value} onChange={(e) => setValue(e.target.value)} />
     )
 }
 

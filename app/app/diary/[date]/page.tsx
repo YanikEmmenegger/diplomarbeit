@@ -79,8 +79,12 @@ const Page: FC<PageProps> = ({params, searchParams}) => {
     const [diary, setDiary] = useState();
 
     useEffect(() => {
+        router.prefetch(`/app/diary/${nextDay}`);
+        router.prefetch(`/app/diary/${prevDay}`);
         const timeout = setTimeout(() => {
             fetchData().then();
+
+            router.prefetch(`/app/`)
         }, 500);
         return () => clearTimeout(timeout);
 

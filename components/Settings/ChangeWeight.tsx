@@ -63,7 +63,7 @@ const ChangeWeight: FC<ChangeWeightProps> = ({}) => {
                 router.refresh()
             }), {
                 loading: 'Speichern...',
-                success: "Gespeichert!",
+                success: "Gewicht Gespeichert!",
                 error: "Fehler beim speichern!",
 
             });
@@ -93,7 +93,7 @@ const ChangeWeight: FC<ChangeWeightProps> = ({}) => {
                     />
                 </div>
                 <div className="col-span-3">
-                    <Button onClick={saveWeight} disabled={!saveButtonActive}
+                    <Button id={"settings-btn-save-weight"} onClick={saveWeight} disabled={!saveButtonActive}
                             className={"w-full text-sm mb-2 p-4"}>{"speichern"}</Button>
                 </div>
             </div>

@@ -3,9 +3,21 @@ import {Auth} from '@supabase/auth-ui-react'
 import {ThemeSupa} from '@supabase/auth-ui-shared'
 import {createClientComponentClient} from '@supabase/auth-helpers-nextjs'
 import {Database} from "@/types/supabaseDatabaseTypes";
+import {useRouter} from "next/navigation";
 
 export default function AuthForm() {
+
+    const router = useRouter()
     const supabase = createClientComponentClient<Database>()
+
+    const { data } = supabase.auth.onAuthStateChange(
+        async (event, session) => {
+            if (session) {
+                router.push('/api/auth/callback');
+            }
+        }
+    )
+
     const getURL = () => {
         let url = process?.env?.NEXT_PUBLIC_VERCEL_ENV === 'production' ?
             "https://caloriecompass.ch/" :
@@ -21,7 +33,7 @@ export default function AuthForm() {
             <h1 className={"text-center text-3xl"}>Login | SignUp</h1>
             <Auth socialLayout={"vertical"} magicLink providers={["github", "google"]}
                   redirectTo={getURL()}
-                  onlyThirdPartyProviders
+                  onlyThirdPartyProviders={process?.env?.NEXT_PUBLIC_VERCEL_ENV === 'production'}
                   theme="dark" supabaseClient={supabase} appearance={{
                 theme: ThemeSupa,
                 variables: {

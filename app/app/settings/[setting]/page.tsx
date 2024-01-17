@@ -42,7 +42,7 @@ const Page: FC<PageProps> = ({params}) => {
     return (
         <>
             <div className=" w-[90%] md:w-1/2 mx-auto">
-                <Button className={"text-sm mb-4"} onClick={router.back}>
+                <Button id={"settings-btn-back"} className={"text-sm mb-4"} onClick={router.back}>
                     Zurück
                 </Button>
                 {getSetting()}

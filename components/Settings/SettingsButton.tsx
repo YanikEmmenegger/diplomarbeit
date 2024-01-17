@@ -5,12 +5,13 @@ import Link from "next/link";
 interface SettingsButtonProps {
     link: string;
     text: string;
+    id: string
 
 }
 
-const SettingsButton: FC<SettingsButtonProps> = ({link, text}) => {
+const SettingsButton: FC<SettingsButtonProps> = ({link, text, id}) => {
     return (
-        <Link href={link}>
+        <Link id={id} href={link}>
             <Button className={"w-full"}>
                 {text}
             </Button>

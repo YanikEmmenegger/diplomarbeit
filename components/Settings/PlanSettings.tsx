@@ -138,7 +138,11 @@ const PlanSettings: FC<PlanSettingsProps> = ({}) => {
                                      placeholder={oldUserPlan?.goal_protein?.toString() || ""}
                                      label={'Protein(aktuell: ' + oldUserPlan?.goal_protein! + 'g)'}/>
 
-                    <h2 className="text-lg text-white text-start mb-4">Kalorienziel: {userPlan!.goal_calories} kcal</h2>
+                    <div className="flex flex-row">
+                        <h2 className="text-lg pl-1 text-white text-start mb-4">Kalorienziel pro Tag (kcal): </h2>
+                        <h2 id={"onboard-text-calorie-goal"}
+                            className="text-lg pl-1 text-white text-start mb-4">{userPlan!.goal_calories}</h2>
+                    </div>
 
                     <SettingSaveButton text={"Speichern"} onClick={safeUserPlan} active={activateSaveButton}/>
                 </>

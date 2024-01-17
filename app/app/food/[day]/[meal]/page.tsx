@@ -109,7 +109,7 @@ const Page: FC<PageProps> = ({searchParams, params}) => {
                                         (
                                             <>
                                                 {loadingMore && <FoodItemSkeleton/>}
-                                                <Button
+                                                <Button id={"food-btn-loadmore"}
                                                     className={twMerge("mb-10 text-xs md:text-base cursor-pointer", extended ? "hidden" : "block")}
                                                     onClick={() => {
                                                         setExtended(true)

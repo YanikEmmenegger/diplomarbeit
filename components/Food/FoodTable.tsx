@@ -17,8 +17,8 @@ const FoodTable: FC<FoodTableProps> = ({foods, meal, date}) => {
                 <div>
                     <h1 className="mb-3 text-xs md:text-base">Results: {foods.length} | ✅ CalorieCompass
                         Datensatz❗externe Datenquelle, Nährwerte prüfen</h1>
-                    <ul role="list" className="divide-y divide-gray-100">
-                        {foods.map((food, index) => <FoodItem meal={meal} date={date} key={index} food={food}/>)}
+                    <ul role="list" id={"food-ul-list"} className="divide-y divide-gray-100">
+                        {foods.map((food, index) => <FoodItem id={index.toString()} meal={meal} date={date} key={index} food={food}/>)}
                     </ul>
                 </div>}
         </div>

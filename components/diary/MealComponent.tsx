@@ -16,14 +16,16 @@ interface MealComponentProps {
 const MealComponent: FC<MealComponentProps> = ({meal, date, meal_type}) => {
     const router = useRouter();
     return (
-        <div className='p-1 w-full'>
+        <div id={"diary-meal-"+meal_type} className='p-1 w-full'>
             <div className={"flex flex-row justify-between"}>
-                <h1 className={"text-xl pl-3"}>{meal.name}</h1>
-                <h1 className={"text-xl pr-3"}>{meal.calories === 0 ? "" : Math.round(meal.calories)}</h1>
+                <h1 className={"diary-meal-name text-xl pl-3"}>{meal.name}</h1>
+                <h1 className={"diary-meal-calories text-xl pr-3"}>{meal.calories === 0 ? "" : Math.round(meal.calories)}</h1>
             </div>
-            <div>
-                <p className={"text-xs pl-3 pb-2 border-white border-b-2 mb-1"}>K: {Math.round(meal.protein)} |
-                    F: {Math.round(meal.fat)} | P: {Math.round(meal.protein)}</p>
+            <div className={"flex-row hidden"}>
+                <p className={"text-xs float-left pl-3 pb-2 border-white border-b-2 mb-1"}>K: {meal.carbohydrates}</p>
+                <p className={"text-xs float-left pl-1 pr-1 pb-2 border-white border-b-2 mb-1"}>F: {Math.round(meal.fat)}</p>
+                <p className={"text-xs pb-2 border-white border-b-2 mb-1"}>P: {Math.round(meal.protein)}</p>
+
             </div>
             <div>
                 {
@@ -41,13 +43,13 @@ const MealComponent: FC<MealComponentProps> = ({meal, date, meal_type}) => {
 
                                     //@ts-ignore
                                     return (
-                                        <DiaryItem key={index} foodModalItem={foodModalItem}/>
+                                        <DiaryItem key={index} id={index.toString()} foodModalItem={foodModalItem}/>
                                     )
                                 })
                             ))
                 }
             </div>
-            <Button onClick={() => router.push("/app/food/" + date + "/" + meal_type)}
+            <Button id={"diary-btn-add-"+meal_type} onClick={() => router.push("/app/food/" + date + "/" + meal_type)}
                     className={" text-sm"}>Hinzufügen</Button>
         </div>
     );
