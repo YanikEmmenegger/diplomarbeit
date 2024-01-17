@@ -8,22 +8,26 @@ interface OnboardingInputProps {
     label: string;
     hideLabel?: boolean;
     pattern?: string;
+    id?: string,
 
 }
 
-const OnboardingInput: FC<OnboardingInputProps> = ({value, onChange, name, label, placeholder, pattern, hideLabel}) => {
+const OnboardingInput: FC<OnboardingInputProps> = ({value, onChange, name, label, placeholder, pattern, hideLabel, id}) => {
     return (
         <>
-            {!hideLabel && <label className="block mb-2 text-white">
+            {!hideLabel && <label className="input-label block mb-2 text-white">
                 {label}
             </label>}
 
 
             <input
+                id={id}
                 type="text"
                 name={name}
                 placeholder={placeholder}
                 value={value}
+                max={10000001}
+                maxLength={10000001}
                 pattern={pattern ? pattern : ".*"}
                 onChange={(e) => {
                     onChange(e.target)

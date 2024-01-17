@@ -44,7 +44,7 @@ const WeightItem: FC<WeightItemProps> = ({weight, setWeights}) => {
             </div>
             <div className="flex items-center">
                 <Button onClick={deleteWeight} disabled={deleting}
-                        className="text-white text-sm ml-auto">{deleting ? "lösche..." : "löschen"}</Button>
+                        className="settings-btn-delete-weight text-white text-sm ml-auto">{deleting ? "lösche..." : "löschen"}</Button>
             </div>
         </li>
     );

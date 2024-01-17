@@ -117,8 +117,10 @@ const StepFive: FC<StepFiveProps> = ({weight, height, activityLevel, user, setUs
                     } name={'goal_protein'} pattern={"[0-9]{3}"}
                                      placeholder={createdPlan?.macronutrients.protein.toString() || ""}
                                      label={'Protein(empfohlen: ' + createdPlan?.macronutrients.protein + 'g)'}/>
-
-                    <h2 className="text-lg text-white text-start mb-4">Kalorienziel: {user.goal_calories} kcal</h2>
+                    <div className="flex flex-row">
+                    <h2 className="text-lg pl-1 text-white text-start mb-4">Kalorienziel pro Tag (kcal): </h2>
+                    <h2 id={"onboard-text-calorie-goal"} className="text-lg pl-1 text-white text-start mb-4">{user.goal_calories}</h2>
+                    </div>
                 </>
             )}
         </div>

@@ -18,9 +18,6 @@ const ChangeHeight: FC<ChangeHeightProps> = ({}) => {
     const [oldHeight, setOldHeight] = useState<number | null>(null);
     const [saveButtonActive, setSaveButtonActive] = useState<boolean>(false);
 
-
-
-
     const fetchHeight = async () => {
         try {
             const response = await axios.get("/api/user/height")
@@ -56,7 +53,7 @@ const ChangeHeight: FC<ChangeHeightProps> = ({}) => {
                 setOldHeight(newHeight.data.height);
             }), {
                 loading: 'Speichern...',
-                success: "Gespeichert!",
+                success: "Grösse Gespeichert!",
                 error: "Fehler beim speichern!",
             });
             router.refresh();
@@ -85,7 +82,7 @@ const ChangeHeight: FC<ChangeHeightProps> = ({}) => {
                     />
                 </div>
                 <div className="col-span-3">
-                    <Button onClick={saveHeight} disabled={!saveButtonActive} className={"w-full text-sm mb-2 p-4"}>{"speichern"}</Button>
+                    <Button id={"settings-btn-save-height"} onClick={saveHeight} disabled={!saveButtonActive} className={"w-full text-sm mb-2 p-4"}>{"speichern"}</Button>
                 </div>
             </div>
         </>

@@ -15,23 +15,28 @@ const Page: FC<PageProps> = ({}) => {
         return [
             {
                 link: "/app/settings/personal",
-                text: "Persönliche Daten"
+                text: "Persönliche Daten",
+                id: "personal"
             },
             {
                 link: "/app/settings/plan",
-                text: "Plan"
+                text: "Plan",
+                id: "plan"
             },
             {
                 link: "/app/settings/weight-height",
-                text: " Grösse & Gewicht anpassen"
+                text: " Grösse & Gewicht anpassen",
+                id: "weight_height"
             },
             {
                 link: "/app/onboard",
-                text: "Onboarding neu starten"
+                text: "Onboarding neu starten",
+                id: "onboard"
             },
             {
                 link: "/api/auth/signout",
-                text: "Logout"
+                text: "Logout",
+                id: "logout"
             },
         ]
 
@@ -43,7 +48,7 @@ const Page: FC<PageProps> = ({}) => {
                 settingOptions.map((settingOption, index) => {
                     return (
                         <div className="mb-4" key={index}>
-                            <SettingsButton link={settingOption.link} text={settingOption.text}/>
+                            <SettingsButton id={"settings-btn-"+settingOption.id} link={settingOption.link} text={settingOption.text}/>
                         </div>
                     )
                 }

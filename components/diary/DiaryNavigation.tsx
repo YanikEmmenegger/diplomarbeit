@@ -17,9 +17,9 @@ const DiaryNavigation: FC<DiaryNavigationProps> = ({date, onPrev, onNext}) => {
 
     return (
         <div className={"w-full md:w-4/5 mx-auto flex flex-row gap-9 justify-between"}>
-            <Button onClick={onPrev}><ArrowLeft/></Button>
-            <h1 className="text-center mt-1 text-lg">{getDisplayNameofDate(date, today)}</h1>
-            <Button onClick={onNext}><ArrowRight/></Button>
+            <Button id={"diary-btn-nav-prev"} onClick={onPrev}><ArrowLeft/></Button>
+            <h1 id={"diary-text-day"} className="text-center mt-1 text-lg">{getDisplayNameofDate(date, today)}</h1>
+            <Button id={"diary-btn-nav-next"} onClick={onNext}><ArrowRight/></Button>
         </div>
     );
 }

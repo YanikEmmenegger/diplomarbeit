@@ -10,7 +10,7 @@ interface ErrorMessageProps {
 const ErrorMessage: FC<ErrorMessageProps> = ({errorCode, errorMessage}) => {
     toast.error(errorMessage)
     return (
-        <div>Something went wrong - sorry</div>
+        <div id={"error-msg"} >Something went wrong - sorry</div>
     );
 }
 

@@ -51,7 +51,7 @@ const NavigationBar: FC<NavigationBarProps> = ({}) => {
                             routes.map(({icon: Icon, label, active, href}) => {
                                 return (
                                     <NavButton
-                                        id={`btn-${label.toLowerCase()}`}
+                                        id={`nav-btn-${label.toLowerCase()}`}
                                         key={label}
                                         icon={Icon}
                                         label={label}

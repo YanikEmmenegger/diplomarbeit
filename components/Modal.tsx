@@ -24,7 +24,7 @@ const Modal: FC<ModalProps> = ({ isOpen, onChange, title, description, children 
                 <Dialog.Content className=" fixed drop-shadow-md top-[50%] left-[50%] w-full h-full translate-x-[-50%] translate-y-[-50%] bg-CalorieCompass-Neutral p-[10px] focus:outline-none">
                     <div className={"flex mx-auto md:w-3/4  w-full flex-col items-center"}>
                         <Dialog.Close asChild>
-                            <button
+                            <button id={"modal-btn-close"}
                                 className="text-neutral-400 hover:text-white  appearance-none items-center justify-center rounded-full focus:outline-none"
                                 aria-label="Close"
                             >
