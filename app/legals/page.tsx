@@ -13,7 +13,7 @@ const Page: FC<PageProps> = ({}) => {
             <Link href={"/"} className="group hover:scale-105 transition-transform">
                 <AiFillCloseCircle font-size={40}/>
             </Link>
-            <h1 className="my-5 text-2xl md:text-5xl">Datenschutzbestimmung</h1>
+            <h1 className="my-5 text-2xl md:text-5xl">Datenschutzerklärung</h1>
             <div className="flex flex-col items-start justify-start pb-20  w-full">
                 <h2 className="text-xl pb-2 pt-3 text-gray-400">1. Verantwortliche Stelle:</h2>
                 <p className="text-sm">Die App ist verantwortlich für die Verarbeitung personenbezogener Daten.</p>
