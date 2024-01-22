@@ -6,10 +6,9 @@ import {Database} from "@/types/supabaseDatabaseTypes";
 import {useRouter} from "next/navigation";
 
 export default function AuthForm() {
-
     const router = useRouter()
+    //Workaround for email/password login
     const supabase = createClientComponentClient<Database>()
-
     const { data } = supabase.auth.onAuthStateChange(
         async (event, session) => {
             if (session) {
@@ -17,11 +16,11 @@ export default function AuthForm() {
             }
         }
     )
-
     const getURL = () => {
+        //check on which environment we are and set the correct callback-url
         let url = process?.env?.NEXT_PUBLIC_VERCEL_ENV === 'production' ?
             "https://caloriecompass.ch/" :
-            process?.env?.NEXT_PUBLIC_VERCEL_URL!// Automatically set by Vercel.
+            process?.env?.NEXT_PUBLIC_VERCEL_URL!// Automatically set by Vercel. (http://localhost:3000 in .env.local)
         // Make sure to include `https://` when not localhost.
         url = url.includes('http') ? url : `https://${url}`
         // Make sure to include a trailing `/`.
@@ -33,6 +32,7 @@ export default function AuthForm() {
             <h1 className={"text-center text-3xl"}>Login | SignUp</h1>
             <Auth socialLayout={"vertical"} magicLink providers={["github", "google"]}
                   redirectTo={getURL()}
+                  //email & Passwort login is only available in development for testing purposes
                   onlyThirdPartyProviders={process?.env?.NEXT_PUBLIC_VERCEL_ENV === 'production'}
                   theme="dark" supabaseClient={supabase} appearance={{
                 theme: ThemeSupa,

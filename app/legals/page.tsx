@@ -20,7 +20,7 @@ const Page: FC<PageProps> = ({}) => {
 
                 <h2 className="text-xl pb-2 pt-3 text-gray-400">2. Welche Daten werden gesammelt?</h2>
                 <p className="text-sm">
-                    - Benutzerangaben: Name, Vorname, E-Mail-Adresse, Geschlecht, Größe, Gewicht.<br/>
+                    - Benutzerangaben: Name, Vorname, E-Mail-Adresse, Geschlecht, Grösse, Gewicht.<br/>
                     - Gesundheitsdaten: Zielkalorien, Ziel Fett, Ziel Kohlenhydrate, Ziel Protein.
                 </p>
 
@@ -34,7 +34,7 @@ const Page: FC<PageProps> = ({}) => {
 
                 <h2 className="text-xl pb-2 pt-3 text-gray-400">4. Datensicherheit:</h2>
                 <p className="text-sm">
-                    - Einsatz von Technologiestandard-Sicherheitsmaßnahmen zum Schutz der Daten.<br/>
+                    - Einsatz von Technologiestandard-Sicherheitsmassnahmen zum Schutz der Daten.<br/>
                     - Verschlüsselung und sichere Übertragung.
                 </p>
 
@@ -51,7 +51,7 @@ const Page: FC<PageProps> = ({}) => {
                 </p>
 
                 <h2 className="text-xl pb-2 pt-3 text-gray-400">7. Kontaktdaten:</h2>
-                <p className="text-sm">- E-Mail-Adresse für Datenschutzanfragen.</p>
+                <p className="text-sm">- yanik.emmenegger@student.ipso.ch</p>
 
             </div>
             <h1 className="my-5 text-2xl md:text-5xl">AGBs</h1>
